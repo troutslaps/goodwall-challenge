@@ -71,10 +71,10 @@ public class AchievementRestClient {
     }
 
     public void getAchievements(final Runnable uiSuccessCallback, final Runnable uiFailedCallback) {
-//        executorService.execute(new Runnable() {
-//
-//            @Override
-//            public void run() {
+        executorService.execute(new Runnable() {
+
+            @Override
+            public void run() {
                 Call<ApiListWithMetadata<Achievement>> call = achievementInterface
                         .getAchievements();
                 Log.d(TAG, call.request().url().toString());
@@ -82,17 +82,22 @@ public class AchievementRestClient {
                 call.enqueue(new Callback<ApiListWithMetadata<Achievement>>() {
                     @Override
                     public void onResponse(Call<ApiListWithMetadata<Achievement>> call,
-                                           Response<ApiListWithMetadata<Achievement>> response) {
+                                           final Response<ApiListWithMetadata<Achievement>>
+                                                   response) {
 
                         Realm realm = Realm.getDefaultInstance();
-                        realm.beginTransaction();
-                        realm.copyToRealmOrUpdate(response.body().getData());
-                        realm.commitTransaction();
-                        realm.close();
+                        realm.executeTransactionAsync(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                realm.copyToRealmOrUpdate(response.body().getData());
+                            }
 
+                        });
+                        realm.close();
                         if (uiSuccessCallback != null) {
                             new Handler(Looper.getMainLooper()).post(uiSuccessCallback);
                         }
+
                     }
 
                     @Override
@@ -108,8 +113,8 @@ public class AchievementRestClient {
 
 
             }
-//        });
-//    }
+        });
+    }
 
 
 }
