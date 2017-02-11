@@ -1,10 +1,15 @@
 package com.troutslaps.goodwallchallenge.model;
 
+import com.troutslaps.goodwallchallenge.app.Constants;
+
 import java.util.Date;
 import java.util.List;
 
+import io.realm.Realm;
 import io.realm.RealmList;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
+import io.realm.Sort;
 import io.realm.annotations.PrimaryKey;
 
 /**
@@ -182,5 +187,17 @@ public class Achievement extends RealmObject {
 
     public void setComments(RealmList<Comment> comments) {
         this.comments = comments;
+    }
+
+    public static RealmResults<Achievement> getAllAchievements(Realm realm) {
+        RealmResults<Achievement> achievements = realm.where(Achievement.class).findAllSortedAsync
+                (Constants.Fields.Created, Sort.DESCENDING);
+        return achievements;
+    }
+
+    public static Achievement getAchievement(Realm realm, int id) {
+        Achievement achievement = realm.where(Achievement.class).equalTo(Constants.Fields.Id, id).
+                findFirstAsync();
+        return achievement;
     }
 }
