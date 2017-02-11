@@ -189,6 +189,11 @@ public class Achievement extends RealmObject {
         this.comments = comments;
     }
 
+    public void addComment(Comment comment) {
+        getComments().add(comment);
+        setCommentsCount(getComments().size());
+    }
+
     public static RealmResults<Achievement> getAllAchievements(Realm realm) {
         RealmResults<Achievement> achievements = realm.where(Achievement.class).findAllSortedAsync
                 (Constants.Fields.Created, Sort.DESCENDING);
