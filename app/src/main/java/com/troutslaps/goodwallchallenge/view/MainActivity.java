@@ -1,5 +1,6 @@
 package com.troutslaps.goodwallchallenge.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -11,12 +12,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.troutslaps.goodwallchallenge.R;
+import com.troutslaps.goodwallchallenge.app.Constants;
 import com.troutslaps.goodwallchallenge.http.client.AchievementRestClient;
 
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = MainActivity.class.getSimpleName();
-
+    private FloatingActionButton fab;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,12 +26,11 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                // TODO
             }
         });
     }
@@ -40,12 +41,14 @@ public class MainActivity extends AppCompatActivity {
         AchievementRestClient.getInstance().getAchievements(new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG, "done!");
+                Snackbar.make(fab, "Done!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         }, new Runnable() {
             @Override
             public void run() {
-                Log.d(TAG, "failed!");
+                Snackbar.make(fab, "Failed!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
             }
         });
     }
