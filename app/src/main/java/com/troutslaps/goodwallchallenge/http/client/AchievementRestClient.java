@@ -20,6 +20,7 @@ import java.net.UnknownHostException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
+import io.realm.Realm;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -69,36 +70,38 @@ public class AchievementRestClient {
         return INSTANCE;
     }
 
-    public void getAchievements(final Runnable uiCallback) {
+    public void getAchievements(final Runnable uiSuccessCallback, final Runnable uiFailedCallback) {
 //        executorService.execute(new Runnable() {
 //
 //            @Override
 //            public void run() {
-                Log.d(TAG,"hello??");
                 Call<ApiListWithMetadata<Achievement>> call = achievementInterface
                         .getAchievements();
                 Log.d(TAG, call.request().url().toString());
-                // save to realm??
+
                 call.enqueue(new Callback<ApiListWithMetadata<Achievement>>() {
                     @Override
                     public void onResponse(Call<ApiListWithMetadata<Achievement>> call,
                                            Response<ApiListWithMetadata<Achievement>> response) {
 
-                        Log.d(TAG, "size = " + response.body().getData().size());
-                        if (uiCallback != null) {
-                            new Handler(Looper.getMainLooper()).post(uiCallback);
+                        Realm realm = Realm.getDefaultInstance();
+                        realm.beginTransaction();
+                        realm.copyToRealmOrUpdate(response.body().getData());
+                        realm.commitTransaction();
+                        realm.close();
+
+                        if (uiSuccessCallback != null) {
+                            new Handler(Looper.getMainLooper()).post(uiSuccessCallback);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<ApiListWithMetadata<Achievement>> call, Throwable
                             t) {
-                        Log.d(TAG, "failed!!");
-                        t.printStackTrace();
-                        if (t instanceof ConnectException || t instanceof UnknownHostException) {
 
 
-                        } else {
+                        if(uiFailedCallback != null) {
+                            new Handler(Looper.getMainLooper()).post(uiFailedCallback);
                         }
                     }
                 });
