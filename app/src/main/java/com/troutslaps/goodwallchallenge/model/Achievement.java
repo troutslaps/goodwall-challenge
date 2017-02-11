@@ -3,11 +3,17 @@ package com.troutslaps.goodwallchallenge.model;
 import java.util.Date;
 import java.util.List;
 
+import io.realm.RealmList;
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by duchess on 11/02/2017.
  */
 
-public class Achievement {
+public class Achievement extends RealmObject {
+
+    @PrimaryKey
     int id;
     String slug;
     String title;
@@ -22,8 +28,8 @@ public class Achievement {
     boolean hasLiked;
     Location location;
     User author;
-    List<Photo> pictures;
-    List<Comment> comments;
+    RealmList<Photo> pictures;
+    RealmList<Comment> comments;
 
     public Achievement() {
     }
@@ -31,7 +37,7 @@ public class Achievement {
     public Achievement(int id, String slug, String title, String body, int color, Date created,
                        Date modified, Date timelineDate, Date startDate, int likeCount, int
                                commentsCount, boolean hasLiked, Location location, User author,
-                       List<Photo> pictures, List<Comment> comments) {
+                       RealmList<Photo> pictures, RealmList<Comment> comments) {
         this.id = id;
         this.slug = slug;
         this.title = title;
@@ -162,19 +168,19 @@ public class Achievement {
         this.author = author;
     }
 
-    public List<Photo> getPictures() {
+    public RealmList<Photo> getPictures() {
         return pictures;
     }
 
-    public void setPictures(List<Photo> pictures) {
+    public void setPictures(RealmList<Photo> pictures) {
         this.pictures = pictures;
     }
 
-    public List<Comment> getComments() {
+    public RealmList<Comment> getComments() {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(RealmList<Comment> comments) {
         this.comments = comments;
     }
 }
