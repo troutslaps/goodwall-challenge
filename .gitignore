@@ -1,0 +1,15 @@
+*.iml
+.gradle
+/local.properties
+/.idea/workspace.xml
+/.idea/codeStyle
+.idea/encodings.xml
+.idea/vcs.xml
+.idea/misc.xml
+.idea/codeStyleSettings.xml
+.idea/libraries/
+.DS_Store
+/build
+/captures
+*.apk
+/.idea/*
