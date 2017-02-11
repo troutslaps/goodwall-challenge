@@ -39,14 +39,14 @@ public class FeedFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        Realm realm = Realm.getDefaultInstance();
+        realm = Realm.getDefaultInstance();
         changeListener = new RealmChangeListener<RealmResults<Achievement>>() {
             @Override
             public void onChange(RealmResults<Achievement> element) {
                 Log.d(TAG, "achievements = " + achievements);
             }
         };
-        achievements = realm.where(Achievement.class).findAllSortedAsync(Constants.Fields.Created);
+        achievements = Achievement.getAllAchievements(realm);
         achievements.addChangeListener(changeListener);
     }
 
