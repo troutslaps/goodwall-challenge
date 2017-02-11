@@ -1,15 +1,21 @@
-package com.troutslaps.goodwallchallenge;
+package com.troutslaps.goodwallchallenge.view;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.troutslaps.goodwallchallenge.R;
+import com.troutslaps.goodwallchallenge.http.client.AchievementRestClient;
+
 public class AchievementActivity extends AppCompatActivity {
+
+    private static final String TAG = AchievementActivity.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +30,17 @@ public class AchievementActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+            }
+        });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        AchievementRestClient.getInstance().getAchievements(new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "done!");
             }
         });
     }
