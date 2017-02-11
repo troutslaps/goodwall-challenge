@@ -23,6 +23,8 @@ public class FeedFragment extends Fragment {
 
     private static final String TAG = FeedFragment.class.getSimpleName();
     RealmResults<Achievement> achievements;
+    RealmChangeListener changeListener;
+    Realm realm;
 
     public FeedFragment() {
 
@@ -38,12 +40,20 @@ public class FeedFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         Realm realm = Realm.getDefaultInstance();
-        achievements = realm.where(Achievement.class).findAllSortedAsync(Constants.Fields.Created);
-        achievements.addChangeListener(new RealmChangeListener<RealmResults<Achievement>>() {
+        changeListener = new RealmChangeListener<RealmResults<Achievement>>() {
             @Override
             public void onChange(RealmResults<Achievement> element) {
-                Log.d(TAG, "achievements");
+                Log.d(TAG, "achievements = " + achievements);
             }
-        });
+        };
+        achievements = realm.where(Achievement.class).findAllSortedAsync(Constants.Fields.Created);
+        achievements.addChangeListener(changeListener);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        achievements.removeChangeListener(changeListener);
+        realm.close();
     }
 }
