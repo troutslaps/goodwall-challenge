@@ -42,6 +42,11 @@ public class AchievementActivity extends AppCompatActivity {
             public void run() {
                 Log.d(TAG, "done!");
             }
+        }, new Runnable() {
+            @Override
+            public void run() {
+                Log.d(TAG, "failed!");
+            }
         });
     }
 
