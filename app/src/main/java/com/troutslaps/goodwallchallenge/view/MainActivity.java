@@ -2,6 +2,7 @@ package com.troutslaps.goodwallchallenge.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -14,8 +15,15 @@ import android.view.MenuItem;
 import com.troutslaps.goodwallchallenge.R;
 import com.troutslaps.goodwallchallenge.app.Constants;
 import com.troutslaps.goodwallchallenge.http.client.AchievementRestClient;
+import com.troutslaps.goodwallchallenge.http.client.Result;
+import com.troutslaps.goodwallchallenge.http.response.ApiListWithMetadata;
+import com.troutslaps.goodwallchallenge.model.Achievement;
 
-public class MainActivity extends AppCompatActivity {
+import java.util.List;
+
+import io.realm.Realm;
+
+public class MainActivity extends AppCompatActivity implements AchievementRestClient.GetAchievementsCallback {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private FloatingActionButton fab;
@@ -38,19 +46,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        AchievementRestClient.getInstance().getAchievements(new Runnable() {
-            @Override
-            public void run() {
-                Snackbar.make(fab, "Done!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        }, new Runnable() {
-            @Override
-            public void run() {
-                Snackbar.make(fab, "Failed!", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        AchievementRestClient.getInstance(this).getAchievements();
     }
 
     @Override
@@ -73,5 +69,40 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSuccess(final Result result) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Bundle extras = result.getExtras();
+                ApiListWithMetadata<Achievement> apiResult = (ApiListWithMetadata<Achievement>)
+                        extras
+                        .getSerializable(Constants.Fields
+                        .Achievements);
+                final List<Achievement> achievements = apiResult.getData();
+                Realm realm = Realm.getDefaultInstance();
+                realm.executeTransactionAsync(new Realm.Transaction() {
+                    @Override
+                    public void execute(Realm realm) {
+                        realm.copyToRealmOrUpdate(achievements);
+                    }
+                });
+                Snackbar.make(fab, "Done!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
+    }
+
+    @Override
+    public void onFailure(Result result) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Snackbar.make(fab, "Failed!", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 }
