@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <import type="com.troutslaps.goodwallchallenge.viewmodel.CommentViewModel" />
+
+        <variable
+            name="achievementViewModel"
+            type="com.troutslaps.goodwallchallenge.viewmodel.AchievementViewModel" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="32dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@{achievementViewModel.getAuthorName()}"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@{achievementViewModel.getLocation()}"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@{achievementViewModel.getAchievementDate()}"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@{achievementViewModel.getAchievementTitle()}"
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@{achievementViewModel.getAchievementBody()}"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:onClick="@{achievementViewModel.onCommentsClicked()}"
+            android:text="@{achievementViewModel.getCommentsDisplay()}"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="@{achievementViewModel.getCommentVisibility(1)}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{achievementViewModel.getCommentViewModel(1) != null ? achievementViewModel.getCommentViewModel(1).onAuthorNameClicked() : null}"
+                android:padding="16dp"
+                android:text="@{achievementViewModel.getCommentViewModel(1).getAuthorName()}"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@{achievementViewModel.getCommentViewModel(1) != null ? achievementViewModel.getCommentViewModel(1).getCommentBody() : null}"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="@{achievementViewModel.getCommentVisibility(0)}">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{achievementViewModel.getCommentViewModel(0) != null ? achievementViewModel.getCommentViewModel(0).onAuthorNameClicked() : null}"
+                android:padding="16dp"
+                android:text="@{achievementViewModel.getCommentViewModel(0) != null ? achievementViewModel.getCommentViewModel(0).getAuthorName() : null}"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="16dp"
+                android:text="@{achievementViewModel.getCommentViewModel(0) != null ? achievementViewModel.getCommentViewModel(0).getCommentBody() : null }"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@{achievementViewModel.getPostTimeAgo()}"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:onClick="@{achievementViewModel.onCongratsClicked()}"
+            android:padding="16dp"
+            android:text="Congrats!" />
+    </LinearLayout>
+</layout>
