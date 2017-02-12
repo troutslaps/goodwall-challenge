@@ -1,11 +1,15 @@
 package com.troutslaps.goodwallchallenge.model;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by duchess on 12/02/2017.
  */
 
-public class Location {
+public class Location extends RealmObject {
 
+    @PrimaryKey
     int id;
     String locality;
     String country;

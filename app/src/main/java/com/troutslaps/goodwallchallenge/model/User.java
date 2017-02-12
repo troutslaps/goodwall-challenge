@@ -1,10 +1,15 @@
 package com.troutslaps.goodwallchallenge.model;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by duchess on 11/02/2017.
  */
 
-public class User {
+public class User extends RealmObject {
+
+    @PrimaryKey
     int id;
     String displayName;
     String type;

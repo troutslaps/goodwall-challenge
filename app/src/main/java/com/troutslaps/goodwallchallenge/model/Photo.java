@@ -2,22 +2,25 @@ package com.troutslaps.goodwallchallenge.model;
 
 import java.util.List;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by duchess on 12/02/2017.
  */
-public class Photo {
+public class Photo extends RealmObject {
 
-
+    @PrimaryKey
     int id;
     String name;
     int retinaLevel;
-    Usage use;
+    String use;
 
     public Photo() {
         // do nothing
     }
 
-    public Photo(int id, String name, int retinaLevel, Usage use) {
+    public Photo(int id, String name, int retinaLevel, String use) {
         this.id = id;
         this.name = name;
         this.retinaLevel = retinaLevel;
@@ -48,11 +51,11 @@ public class Photo {
         this.retinaLevel = retinaLevel;
     }
 
-    public Usage getUse() {
+    public String getUse() {
         return use;
     }
 
-    public void setUse(Usage use) {
+    public void setUse(String use) {
         this.use = use;
     }
 

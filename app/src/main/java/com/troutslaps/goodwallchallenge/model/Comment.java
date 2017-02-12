@@ -2,11 +2,16 @@ package com.troutslaps.goodwallchallenge.model;
 
 import java.util.Date;
 
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+
 /**
  * Created by duchess on 11/02/2017.
  */
 
-public class Comment {
+public class Comment extends RealmObject {
+
+    @PrimaryKey
     int id;
     String body;
     Date created;
