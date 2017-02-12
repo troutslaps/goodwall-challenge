@@ -3,6 +3,9 @@ apply plugin: 'realm-android'
 
 
 android {
+    dataBinding {
+        enabled = true
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
