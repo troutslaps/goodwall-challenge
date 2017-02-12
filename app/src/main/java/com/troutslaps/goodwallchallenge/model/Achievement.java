@@ -2,6 +2,7 @@ package com.troutslaps.goodwallchallenge.model;
 
 import com.troutslaps.goodwallchallenge.app.Constants;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by duchess on 11/02/2017.
  */
 
-public class Achievement extends RealmObject {
+public class Achievement extends RealmObject implements Serializable {
 
     @PrimaryKey
     int id;
