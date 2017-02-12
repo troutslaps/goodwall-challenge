@@ -191,8 +191,19 @@ public class Achievement extends RealmObject implements Serializable {
     }
 
     public void addComment(Comment comment) {
+
         getComments().add(comment);
         setCommentsCount(getComments().size());
+    }
+
+    public List<Comment> getLastComments(int count) {
+        List<Comment> lastComments = getComments().sort(Constants.Fields.Created, Sort
+                .DESCENDING);
+        if(lastComments.size() > count) {
+            return lastComments.subList(getCommentsCount() - count, getCommentsCount() - 1);
+        } else {
+            return lastComments;
+        }
     }
 
     public static RealmResults<Achievement> getAllAchievements(Realm realm) {
