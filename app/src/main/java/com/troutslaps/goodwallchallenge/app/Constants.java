@@ -13,6 +13,11 @@ public class Constants {
         public static final String DateFormat = "yyyy-MM-dd'T'HH:mm:ssZ";
     }
 
+    public static class View {
+        public static final String DateFormat = "MMM dd, yyyy";
+        public static final String TimeFormat = "hh:mm a";
+    }
+
     public static class Fields {
         public final static String Id = "id";
         public final static String Body = "body";
