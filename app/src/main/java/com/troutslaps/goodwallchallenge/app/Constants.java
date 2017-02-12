@@ -20,6 +20,7 @@ public class Constants {
         public final static String Modified = "modified";
         public final static String Author = "author";
         public final static String Achievement = "achievement";
+        public final static String  Achievements = "achievements";
     }
 
 }
