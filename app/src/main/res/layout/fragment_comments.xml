@@ -16,7 +16,7 @@
     tools:showIn="@layout/activity_comments">
     <include layout="@layout/item_comment"
         android:id="@+id/achievement"
-        bind:commentViewModel="@{viewModel.getAchievementAsComment()}"
+        bind:commentViewModel="@{viewModel}"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:layout_alignParentTop="true"/>
