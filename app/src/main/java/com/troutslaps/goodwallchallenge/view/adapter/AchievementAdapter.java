@@ -35,14 +35,16 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
     public AchievementAdapter.BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemAchievementBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent
                 .getContext()), R.layout.item_achievement, parent, false);
+        binding.setAchievementViewModel(new AchievementViewModel(context, null, listener));
         return new BindingHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(AchievementAdapter.BindingHolder holder, int position) {
         ItemAchievementBinding postBinding = holder.binding;
-        postBinding.setAchievementViewModel(new AchievementViewModel(context, achievements.get
-                (position), listener));
+        AchievementViewModel vm = postBinding.getAchievementViewModel();
+        vm.setAchievement(achievements.get(position));
+        postBinding.notifyChange();
     }
 
     @Override
