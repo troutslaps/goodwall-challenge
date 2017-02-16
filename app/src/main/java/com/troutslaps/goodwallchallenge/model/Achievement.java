@@ -199,8 +199,8 @@ public class Achievement extends RealmObject implements Serializable {
     public List<Comment> getLastComments(int count) {
         List<Comment> lastComments = getComments().sort(Constants.Fields.Created, Sort
                 .DESCENDING);
-        if(lastComments.size() > count) {
-            return lastComments.subList(getCommentsCount() - count, getCommentsCount() - 1);
+        if (lastComments.size() > count) {
+            return lastComments.subList(0, count);
         } else {
             return lastComments;
         }
@@ -216,5 +216,10 @@ public class Achievement extends RealmObject implements Serializable {
         Achievement achievement = realm.where(Achievement.class).equalTo(Constants.Fields.Id, id).
                 findFirstAsync();
         return achievement;
+    }
+
+    public static RealmResults<Comment> getComments(Realm realm, int id) {
+        return realm.where(Comment.class).equalTo(Constants.Fields.AchievementId, id).
+                findAllSortedAsync(Constants.Fields.Created, Sort.DESCENDING);
     }
 }
