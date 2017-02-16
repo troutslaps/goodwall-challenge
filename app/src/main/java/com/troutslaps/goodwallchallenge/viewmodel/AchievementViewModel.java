@@ -5,6 +5,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.view.View;
 
+import com.android.databinding.library.baseAdapters.BR;
 import com.troutslaps.goodwallchallenge.R;
 import com.troutslaps.goodwallchallenge.app.Utils;
 import com.troutslaps.goodwallchallenge.model.Achievement;
@@ -19,7 +20,7 @@ import java.util.List;
  * Created by duchess on 12/02/2017.
  */
 
-public class AchievementViewModel extends BaseObservable {
+public class AchievementViewModel extends BaseObservable implements PostViewModelInterface {
     private final static int NumberOfComments = 2;
     private Context context;
     private Achievement achievement;
@@ -33,6 +34,11 @@ public class AchievementViewModel extends BaseObservable {
         this.context = context;
         this.achievement = achievement;
         this.listener = listener;
+
+    }
+
+    public void setAchievement(Achievement achievement) {
+        this.achievement = achievement;
         List<Comment> lastComments = achievement.getLastComments(NumberOfComments);
         this.commentViewModels = new ArrayList<>();
         CommentViewModel cvm;
@@ -40,7 +46,9 @@ public class AchievementViewModel extends BaseObservable {
             cvm = new CommentViewModel(comment, context, null);
             commentViewModels.add(cvm);
         }
+        notifyPropertyChanged(BR.achievementViewModel);
     }
+
 
     public int getCommentVisibility(int position) {
         return commentViewModels.size() > position ? View.VISIBLE : View.GONE;
@@ -93,6 +101,27 @@ public class AchievementViewModel extends BaseObservable {
         return user.getDisplayName();
     }
 
+    @Override
+    public String getCommentBody() {
+        return achievement.getBody();
+    }
+
+    @Override
+    public String getCommentTime() {
+        return Utils.DateTime.getDisplayTime(achievement.getCreated());
+    }
+
+    @Override
+    public View.OnClickListener onAuthorNameClicked() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                listener.onAuthorNameClicked(achievement.getAuthor());
+            }
+        };
+    }
+
     public String getLocation() {
         return Utils.Locality.getLocalityDisplay(context, achievement.getAuthor().getLocation());
     }
@@ -108,14 +137,7 @@ public class AchievementViewModel extends BaseObservable {
         }
     }
 
-    public CommentViewModel getAchievementAsComment(){
-        Comment comment = new Comment();
-        comment.setAchievementId(achievement.getId());
-        comment.setAuthor(achievement.getAuthor());
-        comment.setCreated(achievement.getCreated());
-        comment.setBody(achievement.getBody());
-        return new CommentViewModel(comment, context, listener);
-    }
+
     public View.OnClickListener onCongratsClicked() {
         return new View.OnClickListener() {
             @Override
@@ -130,10 +152,12 @@ public class AchievementViewModel extends BaseObservable {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onAddCommentButtonClicked(achievement, newComment, achievement.getAuthor());
+                listener.onAddCommentButtonClicked(achievement, newComment, achievement.getAuthor
+                        ());
             }
         };
     }
+
     public View.OnClickListener onCommentsClicked() {
         return new View.OnClickListener() {
             @Override
@@ -144,9 +168,12 @@ public class AchievementViewModel extends BaseObservable {
         };
     }
 
+
     public interface Listener extends CommentViewModel.Listener {
         void onCongratsClicked(Achievement achievement);
+
         void onCommentsClicked(Achievement achievement);
+
         void onAddCommentButtonClicked(Achievement achievement, String comment, User user);
     }
 
