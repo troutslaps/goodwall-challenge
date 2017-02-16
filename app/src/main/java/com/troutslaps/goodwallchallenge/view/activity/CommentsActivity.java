@@ -43,7 +43,7 @@ public class CommentsActivity extends AppCompatActivity implements CommentsFragm
     }
 
     @Override
-    public void onAddCommentButtonClicked(Achievement achievement, final String comment,
+    public void onAddCommentButtonClicked(final Achievement achievement, final String comment,
                                           final User user) {
         Realm realm = Realm.getDefaultInstance();
 
@@ -71,7 +71,9 @@ public class CommentsActivity extends AppCompatActivity implements CommentsFragm
                 commentNew.setAuthor(userLocal);
                 commentNew.setModified(null);
                 commentNew.setId(nextId);
+                realm.copyToRealmOrUpdate(commentNew);
                 achievementLocal.addComment(commentNew);
+                realm.copyToRealmOrUpdate(achievementLocal);
             }
         });
 
@@ -79,7 +81,7 @@ public class CommentsActivity extends AppCompatActivity implements CommentsFragm
     }
 
     @Override
-    public void onAuthorNameClicked(Comment comment) {
+    public void onAuthorNameClicked(User user) {
         // show bottom sheet
     }
 }
