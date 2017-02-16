@@ -22,12 +22,15 @@ import com.troutslaps.goodwallchallenge.viewmodel.AchievementViewModel;
 import java.util.List;
 
 import io.realm.Realm;
+import io.realm.RealmList;
+import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity implements AchievementRestClient
         .GetAchievementsCallback, AchievementViewModel.Listener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private FloatingActionButton fab;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +70,11 @@ public class MainActivity extends AppCompatActivity implements AchievementRestCl
     }
 
     @Override
+    public void onProgressStarted(Result result) {
+        // TODO tell fragment to circular progress
+    }
+
+    @Override
     public void onSuccess(final Result result) {
         runOnUiThread(new Runnable() {
             @Override
@@ -74,14 +82,43 @@ public class MainActivity extends AppCompatActivity implements AchievementRestCl
                 Bundle extras = result.getExtras();
                 ApiListWithMetadata<Achievement> apiResult = (ApiListWithMetadata<Achievement>)
                         extras
-                        .getSerializable(Constants.Fields
-                        .Achievements);
+                                .getSerializable(Constants.Fields
+                                        .Achievements);
                 final List<Achievement> achievements = apiResult.getData();
                 Realm realm = Realm.getDefaultInstance();
                 realm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        realm.copyToRealmOrUpdate(achievements);
+                        // hack to query all existing comments matching the achievement id
+                        // and re-associate them to parent achievement object
+                        RealmResults<Comment> allComments;
+                        RealmList<Comment> commentsList;
+                        for (Achievement achievement : achievements) {
+                            Achievement oldAchievementRecord = realm.where(Achievement.class)
+                                    .equalTo(Constants.Fields.Id, achievement.getId()).findFirst();
+                            if (oldAchievementRecord != null) {
+                                // update existing comments with latest from API
+                                realm.copyToRealmOrUpdate(achievement.getComments());
+                                // then re-fetch ALL comments previously associated with
+                                // this achievement
+                                allComments = realm.where(Comment.class)
+                                        .equalTo(Constants.Fields.AchievementId, achievement
+                                                .getId()).findAll();
+                                // and then re-establish association before writing
+                                if(achievement.getComments() == null) {
+                                    commentsList = new RealmList<Comment>();
+                                } else {
+                                    commentsList = achievement.getComments();
+                                }
+                                commentsList.addAll(allComments
+                                        .subList(0,
+                                                allComments.size()));
+                                achievement.setComments(commentsList);
+                                achievement.setCommentsCount(commentsList.size());
+                            }
+                            realm.copyToRealmOrUpdate(achievement);
+
+                        }
                     }
                 });
 
@@ -115,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements AchievementRestCl
     }
 
     @Override
-    public void onAuthorNameClicked(Comment comment) {
+    public void onAuthorNameClicked(User user) {
         // do nothing for now
     }
 
