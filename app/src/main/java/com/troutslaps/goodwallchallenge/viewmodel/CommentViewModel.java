@@ -6,12 +6,13 @@ import android.view.View;
 
 import com.troutslaps.goodwallchallenge.app.Utils;
 import com.troutslaps.goodwallchallenge.model.Comment;
+import com.troutslaps.goodwallchallenge.model.User;
 
 /**
  * Created by duchess on 12/02/2017.
  */
 
-public class CommentViewModel extends BaseObservable {
+public class CommentViewModel extends BaseObservable implements  PostViewModelInterface{
     Comment comment;
     Context context;
     Listener listener;
@@ -22,28 +23,32 @@ public class CommentViewModel extends BaseObservable {
         this.listener = listener;
     }
 
+    @Override
     public String getAuthorName() {
         return comment.getAuthor().getDisplayName();
     }
 
+    @Override
     public String getCommentBody() {
         return comment.getBody();
     }
 
+    @Override
     public String getCommentTime() {
         return Utils.DateTime.getDisplayTime(comment.getCreated());
     }
 
+    @Override
     public View.OnClickListener onAuthorNameClicked() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onAuthorNameClicked(comment);
+                listener.onAuthorNameClicked(comment.getAuthor());
             }
         };
     }
 
     public interface Listener {
-        public void onAuthorNameClicked(Comment comment);
+        public void onAuthorNameClicked(User user);
     }
 }
