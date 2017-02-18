@@ -3,10 +3,13 @@ package com.troutslaps.goodwallchallenge.viewmodel;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 
-import com.android.databinding.library.baseAdapters.BR;
+import com.mikepenz.goodwall_typeface_library.GoodWall;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.troutslaps.goodwallchallenge.R;
 import com.troutslaps.goodwallchallenge.app.Constants;
 import com.troutslaps.goodwallchallenge.app.Utils;
@@ -99,7 +102,6 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
         }
         return null;
     }
-
 
     @Bindable
     public String getPostTimeAgo() {

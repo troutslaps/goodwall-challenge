@@ -136,6 +136,6 @@
             android:layout_margin="8dp"
             android:onClick="@{achievementViewModel.onCongratsClicked()}"
             android:padding="16dp"
-            android:text="Congrats!"/>
+            android:text="@string/txt_congrats"/>
     </LinearLayout>
 </layout>
