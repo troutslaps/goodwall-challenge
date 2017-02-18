@@ -27,9 +27,7 @@ public class Utils {
     private static final String TAG = Utils.class.getSimpleName();
     private static HashMap<String, String> PhotoUrls = new HashMap<>();
     private static HashMap<String, String> ProfilePhotoUrls = new HashMap<>();
-    private static List<String> StockPhotoCategories = Arrays.asList("abstract", "animals",
-            "business", "cats", "city", "food", "nightlife", "fashion", "people", "nature",
-            "sports", "technics", "transport");
+
     private static ThreadLocal<SimpleDateFormat> sdfForApiResponse = new
             ThreadLocal<SimpleDateFormat>() {
                 @Override

@@ -19,6 +19,13 @@
         android:orientation="vertical"
         android:padding="32dp">
 
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:adjustViewBounds="true"
+            bind:error="@{@drawable/sparkle_pattern}"
+            bind:placeholder="@{@drawable/sparkle_pattern}"
+            bind:profilePhotoUrl="@{achievementViewModel.getAuthorProfilePhoto()}"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
