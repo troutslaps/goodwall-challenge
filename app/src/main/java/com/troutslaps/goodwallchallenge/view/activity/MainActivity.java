@@ -3,7 +3,6 @@ package com.troutslaps.goodwallchallenge.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -23,7 +22,6 @@ import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmList;
-import io.realm.RealmResults;
 
 public class MainActivity extends AppCompatActivity implements AchievementRestClient
         .GetAchievementsCallback, AchievementViewModel.Listener {
@@ -91,34 +89,31 @@ public class MainActivity extends AppCompatActivity implements AchievementRestCl
                     public void execute(Realm realm) {
                         // hack to query all existing comments matching the achievement id
                         // and re-associate them to parent achievement object
-                        RealmResults<Comment> allComments;
-                        RealmList<Comment> commentsList;
-                        for (Achievement achievement : achievements) {
-                            Achievement oldAchievementRecord = realm.where(Achievement.class)
-                                    .equalTo(Constants.Fields.Id, achievement.getId()).findFirst();
-                            if (oldAchievementRecord != null) {
-                                // update existing comments with latest from API
-                                realm.copyToRealmOrUpdate(achievement.getComments());
-                                // then re-fetch ALL comments previously associated with
-                                // this achievement
-                                allComments = realm.where(Comment.class)
-                                        .equalTo(Constants.Fields.AchievementId, achievement
-                                                .getId()).findAll();
-                                // and then re-establish association before writing
-                                if(achievement.getComments() == null) {
-                                    commentsList = new RealmList<Comment>();
-                                } else {
-                                    commentsList = achievement.getComments();
-                                }
-                                commentsList.addAll(allComments
-                                        .subList(0,
-                                                allComments.size()));
-                                achievement.setComments(commentsList);
-                                achievement.setCommentsCount(commentsList.size());
-                            }
-                            realm.copyToRealmOrUpdate(achievement);
+                        Comment existingComment;
 
+                        for (Achievement achievement : achievements) {
+                            RealmList<Comment> allComments = new RealmList<Comment>();
+                            if (achievement.getComments() != null) {
+                                for (Comment comment : achievement.getComments()) {
+                                    existingComment = realm.where(Comment.class).equalTo(Constants
+                                                    .Fields.Id, comment.getId()).findFirst();
+                                    if(existingComment != null) {
+                                        existingComment.deleteFromRealm();
+                                    }
+                                }
+                                allComments.addAll(achievement.getComments());
+                            }
+
+                            List<Comment> oldComments = realm.where(Comment.class).equalTo
+                                    (Constants.Fields.AchievementId, achievement.getId()).findAll();
+
+
+                            allComments.addAll(oldComments);
+                            achievement.setComments(allComments);
+                            achievement.setCommentsCount(allComments.size());
+                            realm.copyToRealmOrUpdate(achievement);
                         }
+
                     }
                 });
 
