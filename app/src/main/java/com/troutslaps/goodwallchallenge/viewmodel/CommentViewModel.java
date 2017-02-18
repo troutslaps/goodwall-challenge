@@ -3,10 +3,12 @@ package com.troutslaps.goodwallchallenge.viewmodel;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.util.Log;
 import android.view.View;
 
 import com.troutslaps.goodwallchallenge.app.Utils;
 import com.troutslaps.goodwallchallenge.model.Comment;
+import com.troutslaps.goodwallchallenge.model.Photo;
 import com.troutslaps.goodwallchallenge.model.User;
 
 /**
@@ -14,6 +16,7 @@ import com.troutslaps.goodwallchallenge.model.User;
  */
 
 public class CommentViewModel extends BaseObservable implements PostViewModelInterface {
+    private static final String TAG = CommentViewModel.class.getSimpleName();
     Comment comment;
     Context context;
     Listener listener;
@@ -27,6 +30,16 @@ public class CommentViewModel extends BaseObservable implements PostViewModelInt
     @Bindable
     public int getVisibility() {
         return comment != null ? View.VISIBLE : View.GONE;
+    }
+
+    @Bindable
+    @Override
+    public String getAuthorProfilePhoto() {
+        if (comment.getAuthor() != null && comment.getAuthor().getPicture() != null) {
+            Photo profilePhoto = comment.getAuthor().getPicture();
+            return Utils.getRandomProfilePhoto(profilePhoto.getName());
+        }
+        return null;
     }
 
     @Bindable
@@ -54,7 +67,7 @@ public class CommentViewModel extends BaseObservable implements PostViewModelInt
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(comment != null) {
+                if (comment != null) {
                     listener.onAuthorNameClicked(comment.getAuthor());
                 }
             }
