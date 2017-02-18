@@ -18,7 +18,6 @@
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
             bind:error="@{@drawable/sparkle_pattern}"
             bind:placeholder="@{@drawable/sparkle_pattern}"
             bind:profilePhotoUrl="@{commentViewModel.getAuthorProfilePhoto()}"/>

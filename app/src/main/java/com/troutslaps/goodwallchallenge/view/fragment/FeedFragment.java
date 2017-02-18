@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.scopely.fontain.Fontain;
+import com.scopely.fontain.interfaces.FontFamily;
 import com.troutslaps.goodwallchallenge.R;
 import com.troutslaps.goodwallchallenge.model.Achievement;
 import com.troutslaps.goodwallchallenge.view.adapter.AchievementAdapter;
@@ -41,6 +43,8 @@ public class FeedFragment extends Fragment {
             Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_feed, container, false);
         setupRecyclerView(v);
+        FontFamily family = Fontain.getFontFamily("Karla");
+        Fontain.applyFontFamilyToViewHierarchy(v, family);
         return v;
     }
 

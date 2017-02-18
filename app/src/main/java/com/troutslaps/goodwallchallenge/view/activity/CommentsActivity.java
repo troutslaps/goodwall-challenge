@@ -1,9 +1,11 @@
 package com.troutslaps.goodwallchallenge.view.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.troutslaps.goodwallchallenge.R;
 import com.troutslaps.goodwallchallenge.app.Constants;
 import com.troutslaps.goodwallchallenge.model.Achievement;
@@ -25,6 +27,11 @@ public class CommentsActivity extends AppCompatActivity implements CommentsFragm
         setContentView(R.layout.activity_comments);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
     }
 
     @Override

@@ -19,6 +19,13 @@
         android:orientation="vertical"
         android:padding="32dp">
 
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:adjustViewBounds="true"
+            bind:error="@{@drawable/sparkle_pattern}"
+            bind:placeholder="@{@drawable/sparkle_pattern}"
+            bind:profilePhotoUrl="@{achievementViewModel.getAuthorProfilePhoto()}"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,6 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
+            android:textStyle="bold"
             android:text="@{achievementViewModel.achievementTitle}"
             android:textAppearance="?android:attr/textAppearanceLarge"/>
 
@@ -128,6 +136,6 @@
             android:layout_margin="8dp"
             android:onClick="@{achievementViewModel.onCongratsClicked()}"
             android:padding="16dp"
-            android:text="Congrats!"/>
+            android:text="@string/txt_congrats"/>
     </LinearLayout>
 </layout>

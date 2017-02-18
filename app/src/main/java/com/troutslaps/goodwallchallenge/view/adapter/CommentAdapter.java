@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
+import com.scopely.fontain.Fontain;
 import com.troutslaps.goodwallchallenge.R;
 import com.troutslaps.goodwallchallenge.databinding.ItemAchievementBinding;
 import com.troutslaps.goodwallchallenge.databinding.ItemCommentBinding;
@@ -37,6 +38,7 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.BindingH
     public CommentAdapter.BindingHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemCommentBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent
                 .getContext()), R.layout.item_comment, parent, false);
+        Fontain.applyFontFamilyToViewHierarchy(binding.getRoot(), Fontain.getFontFamily("Karla"));
         return new CommentAdapter.BindingHolder(binding);
     }
 
