@@ -44,7 +44,6 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         ItemAchievementBinding postBinding = holder.binding;
         AchievementViewModel vm = postBinding.getAchievementViewModel();
         vm.setAchievement(achievements.get(position));
-        postBinding.notifyChange();
     }
 
     @Override
