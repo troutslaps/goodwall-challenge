@@ -48,15 +48,13 @@ public class CommentsActivity extends AppCompatActivity implements CommentsFragm
         Realm realm = Realm.getDefaultInstance();
 
         final int achievementId = achievement.getId();
-        final int userId = user.getId();
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
                 Achievement achievementLocal = realm.where(Achievement.class).equalTo(Constants
                                 .Fields
                                 .Id, achievementId).findFirst();
-                User userLocal = realm.where(User.class).equalTo(Constants.Fields.Id, userId)
-                        .findFirst();
+                User randomUser = User.getRandomUser(realm);
                 Number currentCommentId = realm.where(Comment.class).max(Constants.Fields.Id);
                 int nextId;
                 if(currentCommentId == null) {
@@ -68,7 +66,7 @@ public class CommentsActivity extends AppCompatActivity implements CommentsFragm
                 commentNew.setBody(comment);
                 commentNew.setAchievementId(achievementLocal.getId());
                 commentNew.setCreated(new Date());
-                commentNew.setAuthor(userLocal);
+                commentNew.setAuthor(randomUser);
                 commentNew.setModified(null);
                 commentNew.setId(nextId);
                 realm.copyToRealmOrUpdate(commentNew);
