@@ -6,6 +6,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textAppearanceSmall">@style/AppTheme.TextAppearanceSmall</item>
+        <item name="android:textAppearanceMedium">@style/AppTheme.TextAppearanceMedium</item>
+        <item name="android:textAppearanceLarge">@style/AppTheme.TextAppearanceLarge</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -16,5 +19,61 @@
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="AppTheme.TextAppearanceSmall" parent="@android:style/TextAppearance.Small">
+        <item name="android:textSize">12sp</item>
+    </style>
+    <style name="AppTheme.TextAppearanceMedium" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">14sp</item>
+    </style>
+    <style name="AppTheme.TextAppearanceLarge" parent="@android:style/TextAppearance.Large">
+        <item name="android:textSize">18sp</item>
+    </style>
+    <style name="AppTheme.PostBodyText" parent="AppTheme.TextAppearanceMedium">
+        <item name="android:maxLines">3</item>
+        <item name="android:ellipsize">marquee</item>
+        <item name="android:marqueeRepeatLimit">marquee_forever</item>
+        <item name="android:focusable">true</item>
+        <item name="android:focusableInTouchMode">true</item>
+        <item name="android:scrollHorizontally">true</item>
+        <item name="android:textColor">@color/colorTxtBody</item>
+    </style>
 
+    <style name="AppTheme.AchievementDate" parent="AppTheme.TextAppearanceSmall">
+        <item name="android:textColor">@color/colorTxtTitle</item>
+        <item name="android:shadowColor">@color/shadowTxtTitle</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowRadius">4</item>
+    </style>
+    <style name="AppTheme.AchievementTitle" parent="AppTheme.TextAppearanceLarge">
+        <item name="android:textColor">@color/colorTxtTitle</item>
+        <item name="android:shadowColor">@color/shadowTxtTitle</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowRadius">4</item>
+    </style>
+    <style name="AppTheme.TimeAgo" parent="AppTheme.TextAppearanceSmall">
+        <item name="android:textColor">@color/colorTxtBody</item>
+    </style>
+    <style name="AppTheme.ClickableText" parent="AppTheme.TextAppearanceMedium">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
+    <style name="AppTheme.PostInfo" parent="AppTheme.TextAppearanceSmall">
+        <item name="android:textColor">@color/colorTxtInfo</item>
+    </style>
+    <style name="AppTheme.CongratsButton" parent="Base.Widget.AppCompat.Button">
+        <item name="background">@drawable/congrats_button_background</item>
+        <item name="android:textAppearance">@style/AppTheme.CongratsTextStyle</item>
+    </style>
+    <style name="AppTheme.LikeButton" parent="Base.Widget.AppCompat.Button">
+        <item name="android:background">@drawable/bg_like_button</item>
+        <item name="android:textAppearance">@style/AppTheme.LikeButtonTextStyle</item>
+    </style>
+
+    <style name="AppTheme.CongratsTextStyle" parent="AppTheme.ClickableText"/>
+
+    <style name="AppTheme.LikeButtonTextStyle" parent="AppTheme.TextAppearanceSmall">
+        <item name="android:textColor">@color/colorPrimary</item>
+    </style>
 </resources>
+

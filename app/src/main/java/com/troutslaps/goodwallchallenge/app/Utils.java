@@ -1,9 +1,13 @@
 package com.troutslaps.goodwallchallenge.app;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.text.format.DateUtils;
 import android.util.Log;
 
+import com.mikepenz.goodwall_typeface_library.GoodWall;
+import com.mikepenz.iconics.IconicsDrawable;
 import com.troutslaps.goodwallchallenge.R;
 import com.troutslaps.goodwallchallenge.model.Location;
 
@@ -27,6 +31,9 @@ public class Utils {
     private static final String TAG = Utils.class.getSimpleName();
     private static HashMap<String, String> PhotoUrls = new HashMap<>();
     private static HashMap<String, String> ProfilePhotoUrls = new HashMap<>();
+    public static int[] Placeholders = {R.drawable.img_placeholder_green, R.drawable
+            .img_placeholder_red, R.drawable.img_placeholder_violet,
+            R.drawable.img_placeholder_yellow};
 
     private static ThreadLocal<SimpleDateFormat> sdfForApiResponse = new
             ThreadLocal<SimpleDateFormat>() {
@@ -56,7 +63,6 @@ public class Utils {
             };
 
 
-
     public static class DateTime {
         public static Date parseFromApi(String string) {
             try {
@@ -76,7 +82,7 @@ public class Utils {
 
         public static String getTimeAgo(Context context, Date date) {
             return DateUtils.getRelativeTimeSpanString(date.getTime(), new Date().getTime(),
-                    DateUtils.MINUTE_IN_MILLIS, DateUtils.FORMAT_ABBREV_RELATIVE).toString();
+                    DateUtils.WEEK_IN_MILLIS, 0).toString();
         }
 
         public static String getDisplayTime(Date date) {
@@ -144,5 +150,17 @@ public class Utils {
         String gender = new Random().nextInt(2) == 0 ? "men/" : "women/";
         String id = Integer.toString(new Random().nextInt(99)) + ".jpg";
         return base + gender + id;
+    }
+
+    public static Drawable getCongratsDrawable(Context context) {
+        return new IconicsDrawable(context)
+                .icon(GoodWall.Icon.gdw_Congrats_08_18)
+                .color(ResourcesCompat.getColor(context.getResources(), R.color.colorPrimary, null))
+                .sizeDp(16);
+    }
+
+    public static Drawable getRandomPlaceholder(Context context) {
+        int index = new Random().nextInt(Placeholders.length);
+        return ResourcesCompat.getDrawable(context.getResources(), Placeholders[index], null);
     }
 }

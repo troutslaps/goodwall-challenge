@@ -5,6 +5,7 @@ import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.View;
 
@@ -148,6 +149,34 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
     }
 
     @Bindable
+    public Drawable getCongratsDrawable() {
+        return Utils.getCongratsDrawable(context);
+    }
+
+    @Bindable
+    public Drawable getPlaceholder() {
+        return Utils.getRandomPlaceholder(context);
+    }
+
+    @Bindable
+    public Drawable getLikeDrawable() {
+        if(achievement.getHasLiked()){
+            return new IconicsDrawable(context).icon(GoodWall.Icon.gdw_HeartFilled20)
+                    .color(ResourcesCompat.getColor(context.getResources(), R.color
+                            .colorPrimary, null))
+                    .sizeDp(18);
+        }
+        return new IconicsDrawable(context).icon(GoodWall.Icon.gdw_HeartOutline20)
+                .color(ResourcesCompat.getColor(context.getResources(), R.color.colorPrimary,
+                        null))
+                .sizeDp(18);
+    }
+
+    @Bindable
+    public String getLikeCount() {
+        return Integer.toString(achievement.getLikeCount());
+    }
+    @Bindable
     @Override
     public String getAuthorProfilePhoto() {
         if (achievement.getAuthor() != null && achievement.getAuthor().getPicture() != null) {
@@ -156,10 +185,11 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
         }
         return null;
     }
+
     @Bindable
     @Override
     public String getCommentBody() {
-        return achievement.getBody();
+        return achievement.getTitle();
     }
 
     @Bindable

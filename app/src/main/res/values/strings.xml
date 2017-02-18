@@ -1,10 +1,11 @@
 <resources>
     <string name="app_name">Goodwall Challenge</string>
+    <string name="community">Community</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_comments">CommentsActivity</string>
+    <string name="title_activity_comments">Comments</string>
     <string name="add_a_comment">Add a comment</string>
     <string name="view_all_comments">View all %d comments</string>
-    <string name="view_one_comment">View 1 comment</string>
+    <string name="view_one_comment">View comment</string>
     <string name="complete_locality">%1$s, %2$s</string>
     <string name="locality">%1$s</string>
     <string name="achievement_body_with_loc">%1$s - %2$s</string>
@@ -12,5 +13,5 @@
     <string name="achievement_date_range">%1$s - %2$s</string>
     <string name="achievement_date_start">%s</string>
     <string name="add_comment">Send</string>
-    <string name="txt_congrats">{gdw-Congrats-08-18} Congrats!</string>
+    <string name="txt_congrats">Congrats!</string>
 </resources>
