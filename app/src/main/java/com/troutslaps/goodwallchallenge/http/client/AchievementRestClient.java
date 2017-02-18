@@ -85,8 +85,7 @@ public class AchievementRestClient {
             public void run() {
                 Call<ApiListWithMetadata<Achievement>> call = achievementInterface
                         .getAchievements();
-                Log.d(TAG, call.request().url().toString());
-
+                callback.get().onProgressStarted(new Result(Result.Type.InProgress));
                 call.enqueue(new Callback<ApiListWithMetadata<Achievement>>() {
                     @Override
                     public void onResponse(Call<ApiListWithMetadata<Achievement>> call,
@@ -122,6 +121,7 @@ public class AchievementRestClient {
     }
 
     public interface GetAchievementsCallback {
+        void onProgressStarted(Result result);
         void onSuccess(Result result);
 
         void onFailure(Result result);

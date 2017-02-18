@@ -29,6 +29,7 @@ public class Achievement extends RealmObject implements Serializable {
     Date modified;
     Date timelineDate;
     Date startDate;
+    Date endDate;
     int likeCount;
     int commentsCount;
     boolean hasLiked;
@@ -41,7 +42,9 @@ public class Achievement extends RealmObject implements Serializable {
     }
 
     public Achievement(int id, String slug, String title, String body, int color, Date created,
-                       Date modified, Date timelineDate, Date startDate, int likeCount, int
+                       Date modified, Date timelineDate, Date startDate, Date endDate, int
+                               likeCount,
+                       int
                                commentsCount, boolean hasLiked, Location location, User author,
                        RealmList<Photo> pictures, RealmList<Comment> comments) {
         this.id = id;
@@ -53,6 +56,8 @@ public class Achievement extends RealmObject implements Serializable {
         this.modified = modified;
         this.timelineDate = timelineDate;
         this.startDate = startDate;
+        this.endDate = endDate;
+
         this.likeCount = likeCount;
         this.commentsCount = commentsCount;
         this.hasLiked = hasLiked;
@@ -134,6 +139,14 @@ public class Achievement extends RealmObject implements Serializable {
         this.startDate = startDate;
     }
 
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
     public int getLikeCount() {
         return likeCount;
     }
@@ -191,8 +204,19 @@ public class Achievement extends RealmObject implements Serializable {
     }
 
     public void addComment(Comment comment) {
+
         getComments().add(comment);
         setCommentsCount(getComments().size());
+    }
+
+    public List<Comment> getLastComments(int count) {
+        List<Comment> lastComments = getComments().sort(Constants.Fields.Created, Sort
+                .DESCENDING);
+        if (lastComments.size() > count) {
+            return lastComments.subList(0, count);
+        } else {
+            return lastComments;
+        }
     }
 
     public static RealmResults<Achievement> getAllAchievements(Realm realm) {
@@ -205,5 +229,10 @@ public class Achievement extends RealmObject implements Serializable {
         Achievement achievement = realm.where(Achievement.class).equalTo(Constants.Fields.Id, id).
                 findFirstAsync();
         return achievement;
+    }
+
+    public static RealmResults<Comment> getComments(Realm realm, int id) {
+        return realm.where(Comment.class).equalTo(Constants.Fields.AchievementId, id).
+                findAllSortedAsync(Constants.Fields.Created, Sort.DESCENDING);
     }
 }

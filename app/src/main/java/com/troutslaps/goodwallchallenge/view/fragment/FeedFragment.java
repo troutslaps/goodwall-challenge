@@ -1,16 +1,20 @@
-package com.troutslaps.goodwallchallenge.view;
+package com.troutslaps.goodwallchallenge.view.fragment;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.troutslaps.goodwallchallenge.R;
-import com.troutslaps.goodwallchallenge.app.Constants;
 import com.troutslaps.goodwallchallenge.model.Achievement;
+import com.troutslaps.goodwallchallenge.view.adapter.AchievementAdapter;
+
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
@@ -25,6 +29,8 @@ public class FeedFragment extends Fragment {
     RealmResults<Achievement> achievements;
     RealmChangeListener changeListener;
     Realm realm;
+    RecyclerView achievementsRv;
+    AchievementAdapter achievementsAdapter;
 
     public FeedFragment() {
 
@@ -33,7 +39,17 @@ public class FeedFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_feed, container, false);
+        View v = inflater.inflate(R.layout.fragment_feed, container, false);
+        setupRecyclerView(v);
+        return v;
+    }
+
+    private void setupRecyclerView(View v) {
+        achievementsRv = (RecyclerView) v.findViewById(R.id.list);
+        achievementsRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        achievementsAdapter = new AchievementAdapter(getActivity(), achievements);
+        achievementsRv.setAdapter(achievementsAdapter);
+
     }
 
     @Override
@@ -43,7 +59,7 @@ public class FeedFragment extends Fragment {
         changeListener = new RealmChangeListener<RealmResults<Achievement>>() {
             @Override
             public void onChange(RealmResults<Achievement> element) {
-                Log.d(TAG, "achievements = " + achievements);
+                achievementsAdapter.notifyDataSetChanged();
             }
         };
         achievements = Achievement.getAllAchievements(realm);
