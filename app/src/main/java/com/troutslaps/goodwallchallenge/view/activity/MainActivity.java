@@ -1,5 +1,6 @@
 package com.troutslaps.goodwallchallenge.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -8,6 +9,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.mikepenz.iconics.context.IconicsContextWrapper;
 import com.scopely.fontain.Fontain;
 import com.troutslaps.goodwallchallenge.R;
 import com.troutslaps.goodwallchallenge.app.Constants;
@@ -37,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements AchievementRestCl
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         AchievementRestClient.getInstance(this).getAchievements();
-
     }
 
     @Override
@@ -66,6 +67,11 @@ public class MainActivity extends AppCompatActivity implements AchievementRestCl
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
     }
 
     @Override
