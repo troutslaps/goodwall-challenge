@@ -1,32 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
+
         <variable
             name="commentViewModel"
             type="com.troutslaps.goodwallchallenge.viewmodel.PostViewModelInterface"/>
     </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerCrop"
+            bind:error="@{@drawable/sparkle_pattern}"
+            bind:placeholder="@{@drawable/sparkle_pattern}"
+            bind:profilePhotoUrl="@{commentViewModel.getAuthorProfilePhoto()}"/>
+
         <TextView
             android:layout_width="wrap_content"
-            android:padding="16dp"
             android:layout_height="wrap_content"
-            android:text="@{commentViewModel.getAuthorName()}"
             android:onClick="@{commentViewModel.onAuthorNameClicked()}"
+            android:padding="16dp"
+            android:text="@{commentViewModel.getAuthorName()}"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
+
         <TextView
             android:layout_width="wrap_content"
-            android:padding="16dp"
             android:layout_height="wrap_content"
+            android:padding="16dp"
             android:text="@{commentViewModel.getCommentTime()}"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
+
         <TextView
             android:layout_width="wrap_content"
-            android:padding="16dp"
             android:layout_height="wrap_content"
+            android:padding="16dp"
             android:text="@{commentViewModel.getCommentBody()}"
             android:textAppearance="?android:attr/textAppearanceSmall"/>
 
