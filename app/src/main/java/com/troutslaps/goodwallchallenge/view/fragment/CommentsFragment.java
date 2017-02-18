@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.scopely.fontain.Fontain;
+import com.scopely.fontain.interfaces.FontFamily;
 import com.troutslaps.goodwallchallenge.BR;
 import com.troutslaps.goodwallchallenge.R;
 import com.troutslaps.goodwallchallenge.databinding.FragmentCommentsBinding;
@@ -46,6 +48,8 @@ public class CommentsFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_comments, container, false);
         setupRecyclerView(binding.getRoot());
+        FontFamily family = Fontain.getFontFamily("Karla");
+        Fontain.applyFontFamilyToViewHierarchy(binding.getRoot(), family);
         return binding.getRoot();
     }
 

@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.scopely.fontain.Fontain;
 import com.troutslaps.goodwallchallenge.R;
 import com.troutslaps.goodwallchallenge.app.Constants;
 import com.troutslaps.goodwallchallenge.http.client.AchievementRestClient;
@@ -35,8 +36,8 @@ public class MainActivity extends AppCompatActivity implements AchievementRestCl
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         AchievementRestClient.getInstance(this).getAchievements();
+
     }
 
     @Override
