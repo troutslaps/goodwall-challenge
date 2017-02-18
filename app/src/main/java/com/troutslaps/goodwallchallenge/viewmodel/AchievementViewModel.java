@@ -94,7 +94,7 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
 
     @Bindable
     public String getPostTimeAgo() {
-        return Utils.DateTime.getTimeAgo(context, achievement.getTimelineDate());
+        return Utils.DateTime.getTimeAgo(context, achievement.getCreated());
     }
 
     @Bindable
@@ -105,7 +105,7 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
     @Bindable
     public String getAchievementDate() {
         String start = Utils.DateTime.getFormattedDate(achievement.getStartDate());
-        String end = Utils.DateTime.getFormattedDate(achievement.getCreated());
+        String end = Utils.DateTime.getFormattedDate(achievement.getEndDate());
         if (!start.isEmpty() && !end.isEmpty()) {
             return String.format(context.getString(R.string.achievement_date_range), start, end);
         }

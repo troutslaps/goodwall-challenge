@@ -29,6 +29,7 @@ public class Achievement extends RealmObject implements Serializable {
     Date modified;
     Date timelineDate;
     Date startDate;
+    Date endDate;
     int likeCount;
     int commentsCount;
     boolean hasLiked;
@@ -41,7 +42,9 @@ public class Achievement extends RealmObject implements Serializable {
     }
 
     public Achievement(int id, String slug, String title, String body, int color, Date created,
-                       Date modified, Date timelineDate, Date startDate, int likeCount, int
+                       Date modified, Date timelineDate, Date startDate, Date endDate, int
+                               likeCount,
+                       int
                                commentsCount, boolean hasLiked, Location location, User author,
                        RealmList<Photo> pictures, RealmList<Comment> comments) {
         this.id = id;
@@ -53,6 +56,8 @@ public class Achievement extends RealmObject implements Serializable {
         this.modified = modified;
         this.timelineDate = timelineDate;
         this.startDate = startDate;
+        this.endDate = endDate;
+
         this.likeCount = likeCount;
         this.commentsCount = commentsCount;
         this.hasLiked = hasLiked;
@@ -132,6 +137,14 @@ public class Achievement extends RealmObject implements Serializable {
 
     public void setStartDate(Date startDate) {
         this.startDate = startDate;
+    }
+
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
     }
 
     public int getLikeCount() {
