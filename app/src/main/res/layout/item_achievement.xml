@@ -22,35 +22,35 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="@{achievementViewModel.getAuthorName()}"
+            android:text="@{achievementViewModel.authorName}"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="@{achievementViewModel.getLocation()}"
+            android:text="@{achievementViewModel.location}"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="@{achievementViewModel.getAchievementDate()}"
+            android:text="@{achievementViewModel.achievementDate}"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="@{achievementViewModel.getAchievementTitle()}"
+            android:text="@{achievementViewModel.achievementTitle}"
             android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="@{achievementViewModel.getAchievementBody()}"
+            android:text="@{achievementViewModel.achievementBody}"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
@@ -58,28 +58,28 @@
             android:layout_height="wrap_content"
             android:padding="16dp"
             android:onClick="@{achievementViewModel.onCommentsClicked()}"
-            android:text="@{achievementViewModel.getCommentsDisplay()}"
+            android:text="@{achievementViewModel.commentsDisplay}"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="@{achievementViewModel.getCommentVisibility(1)}">
+            android:visibility="@{achievementViewModel.firstComment.visibility}">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{achievementViewModel.getCommentViewModel(1) != null ? achievementViewModel.getCommentViewModel(1).onAuthorNameClicked() : null}"
+                android:onClick="@{achievementViewModel.firstComment != null ? achievementViewModel.firstComment.onAuthorNameClicked() : null}"
                 android:padding="16dp"
-                android:text="@{achievementViewModel.getCommentViewModel(1).getAuthorName()}"
+                android:text="@{achievementViewModel.firstComment.authorName}"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:text="@{achievementViewModel.getCommentViewModel(1) != null ? achievementViewModel.getCommentViewModel(1).getCommentBody() : null}"
+                android:text="@{achievementViewModel.firstComment != null ? achievementViewModel.firstComment.commentBody : null}"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
@@ -87,21 +87,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:visibility="@{achievementViewModel.getCommentVisibility(0)}">
+            android:visibility="@{achievementViewModel.secondComment.visibility}">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{achievementViewModel.getCommentViewModel(0) != null ? achievementViewModel.getCommentViewModel(0).onAuthorNameClicked() : null}"
+                android:onClick="@{achievementViewModel.secondComment != null ? achievementViewModel.secondComment.onAuthorNameClicked() : null}"
                 android:padding="16dp"
-                android:text="@{achievementViewModel.getCommentViewModel(0) != null ? achievementViewModel.getCommentViewModel(0).getAuthorName() : null}"
+                android:text="@{achievementViewModel.secondComment != null ? achievementViewModel.secondComment.authorName : null}"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="16dp"
-                android:text="@{achievementViewModel.getCommentViewModel(0) != null ? achievementViewModel.getCommentViewModel(0).getCommentBody() : null }"
+                android:text="@{achievementViewModel.secondComment != null ? achievementViewModel.secondComment.commentBody : null }"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>
 
@@ -109,7 +109,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            android:text="@{achievementViewModel.getPostTimeAgo()}"
+            android:text="@{achievementViewModel.postTimeAgo}"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <Button
