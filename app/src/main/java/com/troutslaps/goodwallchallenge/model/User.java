@@ -1,5 +1,9 @@
 package com.troutslaps.goodwallchallenge.model;
 
+import java.util.List;
+import java.util.Random;
+
+import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
@@ -97,4 +101,12 @@ public class User extends RealmObject {
     public void setConnection(String connection) {
         this.connection = connection;
     }
+
+    public static User getRandomUser(Realm realm) {
+        List<User> users = realm.where(User.class).findAll();
+        return users.get(new Random().nextInt(users.size()));
+
+    }
+
 }
+
