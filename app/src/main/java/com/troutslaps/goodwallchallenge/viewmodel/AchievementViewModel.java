@@ -3,6 +3,7 @@ package com.troutslaps.goodwallchallenge.viewmodel;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.util.Log;
 import android.view.View;
 
 import com.android.databinding.library.baseAdapters.BR;
@@ -12,6 +13,7 @@ import com.troutslaps.goodwallchallenge.app.Utils;
 import com.troutslaps.goodwallchallenge.model.Achievement;
 import com.troutslaps.goodwallchallenge.model.Comment;
 import com.troutslaps.goodwallchallenge.model.Location;
+import com.troutslaps.goodwallchallenge.model.Photo;
 import com.troutslaps.goodwallchallenge.model.User;
 
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import io.realm.Sort;
 
 public class AchievementViewModel extends BaseObservable implements PostViewModelInterface {
     private final static int NumberOfComments = 2;
+    private static final String TAG = AchievementViewModel.class.getSimpleName();
     private Context context;
     private Achievement achievement;
     private CommentViewModel firstComment;
@@ -89,7 +92,13 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
     }
 
 
-
+    @Bindable
+    public String getPhotoUrl() {
+        if(achievement.getPictures() != null && achievement.getPictures().size() > 0) {
+            return Utils.getRandomPhoto(achievement.getPictures().get(0).getName());
+        }
+        return null;
+    }
 
 
     @Bindable
@@ -136,6 +145,15 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
         return user.getDisplayName();
     }
 
+    @Bindable
+    @Override
+    public String getAuthorProfilePhoto() {
+        if (achievement.getAuthor() != null && achievement.getAuthor().getPicture() != null) {
+            Photo profilePhoto = achievement.getAuthor().getPicture();
+            return Utils.getRandomProfilePhoto(profilePhoto.getName());
+        }
+        return null;
+    }
     @Bindable
     @Override
     public String getCommentBody() {

@@ -1,21 +1,35 @@
 package com.troutslaps.goodwallchallenge.app;
 
 import android.content.Context;
-import android.text.format.DateFormat;
 import android.text.format.DateUtils;
+import android.util.Log;
 
 import com.troutslaps.goodwallchallenge.R;
 import com.troutslaps.goodwallchallenge.model.Location;
 
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by duchess on 12/02/2017.
  */
 
 public class Utils {
+
+    private static final String TAG = Utils.class.getSimpleName();
+    private static HashMap<String, String> PhotoUrls = new HashMap<>();
+    private static HashMap<String, String> ProfilePhotoUrls = new HashMap<>();
+    private static List<String> StockPhotoCategories = Arrays.asList("abstract", "animals",
+            "business", "cats", "city", "food", "nightlife", "fashion", "people", "nature",
+            "sports", "technics", "transport");
     private static ThreadLocal<SimpleDateFormat> sdfForApiResponse = new
             ThreadLocal<SimpleDateFormat>() {
                 @Override
@@ -42,6 +56,8 @@ public class Utils {
                 }
 
             };
+
+
 
     public static class DateTime {
         public static Date parseFromApi(String string) {
@@ -91,5 +107,44 @@ public class Utils {
             }
             return locality;
         }
+    }
+
+    public static String getRandomPhoto(String name) {
+        if (name != null && !name.isEmpty()) {
+            if (PhotoUrls.containsKey(name)) {
+                return PhotoUrls.get(name);
+            } else {
+                String newUrl = generateRandomPhotoUrl();
+                PhotoUrls.put(name, newUrl);
+                return newUrl;
+            }
+        }
+        return "";
+    }
+
+    public static String getRandomProfilePhoto(String name) {
+        if (name != null && !name.isEmpty()) {
+            if (ProfilePhotoUrls.containsKey(name)) {
+                return ProfilePhotoUrls.get(name);
+            } else {
+                String newUrl = generateRandomProfilePhotoUrl();
+                ProfilePhotoUrls.put(name, newUrl);
+                return newUrl;
+            }
+        }
+        return "";
+    }
+
+    private static String generateRandomPhotoUrl() {
+        String base = "https://unsplash.it/768/768?image=";
+        String id = Integer.toString(new Random().nextInt(1000));
+        return base + id;
+    }
+
+    private static String generateRandomProfilePhotoUrl() {
+        String base = "https://randomuser.me/api/portraits/";
+        String gender = new Random().nextInt(2) == 0 ? "men/" : "women/";
+        String id = Integer.toString(new Random().nextInt(99)) + ".jpg";
+        return base + gender + id;
     }
 }
