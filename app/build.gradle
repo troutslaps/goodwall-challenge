@@ -45,4 +45,6 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     compile 'com.scopely:fontain:1.0.0'
+    compile "com.mikepenz:iconics-core:2.8.2@aar"
+    compile project(':GoodWall')
 }

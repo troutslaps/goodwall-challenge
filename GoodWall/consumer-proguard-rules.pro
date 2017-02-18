@@ -1,0 +1,1 @@
+-keep class com.mikepenz.goodwall_typeface_library.GoodWall { *; }
