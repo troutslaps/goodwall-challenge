@@ -7,9 +7,11 @@
     <color name="colorTxtBody">#887a65</color>
     <color name="colorTxtInfo">#949494</color>
     <color name="colorTxtTitle">#FFFFFF</color>
+    <color name="colorSendBtn">#84ffffff</color>
     <color name="shadowTxtTitle">#7f000000</color>
     <color name="colorPlaceholderGreen">#71aca0</color>
     <color name="colorPlaceholderViolet">#6a4668</color>
     <color name="colorPlaceholderRed">#e04f06</color>
     <color name="colorPlaceholderYellow">#ffae00</color>
+    <color name="colorCommentInfo">#98887a65</color>
 </resources>

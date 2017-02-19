@@ -14,6 +14,7 @@ import com.scopely.fontain.Fontain;
 import com.scopely.fontain.interfaces.FontFamily;
 import com.troutslaps.goodwallchallenge.BR;
 import com.troutslaps.goodwallchallenge.R;
+import com.troutslaps.goodwallchallenge.app.Constants;
 import com.troutslaps.goodwallchallenge.databinding.FragmentCommentsBinding;
 import com.troutslaps.goodwallchallenge.model.Achievement;
 import com.troutslaps.goodwallchallenge.model.Comment;
@@ -23,6 +24,7 @@ import com.troutslaps.goodwallchallenge.viewmodel.AchievementViewModel;
 import io.realm.Realm;
 import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * A placeholder fragment containing a simple view.
@@ -55,7 +57,8 @@ public class CommentsFragment extends Fragment {
 
     private void setupRecyclerView(View v) {
         commentsRv = (RecyclerView) v.findViewById(R.id.list);
-        commentsRv.setLayoutManager(new LinearLayoutManager(getActivity()));
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        commentsRv.setLayoutManager(llm);
 
     }
 
@@ -75,11 +78,12 @@ public class CommentsFragment extends Fragment {
                 public void onChange(Achievement element) {
                     if (commentsAdapter == null) {
                         commentsAdapter = new CommentAdapter(getActivity(), achievement
-                                .getComments());
+                                .getComments().sort(Constants.Fields.Created, Sort.DESCENDING));
                         commentsRv.setAdapter(commentsAdapter);
                     } else {
                         commentsAdapter.notifyDataSetChanged();
                     }
+                    commentsRv.scrollToPosition(commentsAdapter.getItemCount()-1);
                     binding.setVariable(BR.viewModel, new AchievementViewModel
                             (getContext(),
                                     achievement, (AchievementViewModel.Listener) getActivity()));

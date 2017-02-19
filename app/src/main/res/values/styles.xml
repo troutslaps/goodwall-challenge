@@ -61,6 +61,9 @@
     <style name="AppTheme.PostInfo" parent="AppTheme.TextAppearanceSmall">
         <item name="android:textColor">@color/colorTxtInfo</item>
     </style>
+    <style name="AppTheme.CommentInfo" parent="AppTheme.TextAppearanceSmall">
+        <item name="android:textColor">@color/colorCommentInfo</item>
+    </style>
     <style name="AppTheme.CongratsButton" parent="Base.Widget.AppCompat.Button">
         <item name="background">@drawable/congrats_button_background</item>
         <item name="android:textAppearance">@style/AppTheme.CongratsTextStyle</item>
@@ -75,5 +78,20 @@
     <style name="AppTheme.LikeButtonTextStyle" parent="AppTheme.TextAppearanceSmall">
         <item name="android:textColor">@color/colorPrimary</item>
     </style>
+
+    <style name="AppTheme.CommentEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:paddingLeft">48dp</item>
+        <item name="android:paddingRight">48dp</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:background">@color/colorTxtTitle</item>
+        <item name="android:textColor">@color/colorTxtBody</item>
+        <item name="colorControlNormal">@android:color/transparent</item>
+        <item name="colorControlActivated">@android:color/transparent</item>
+        <item name="colorControlHighlight">@android:color/transparent</item>
+    </style>
+
+
 </resources>
 

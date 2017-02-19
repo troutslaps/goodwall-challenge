@@ -26,8 +26,8 @@
             android:layout_height="48dp"
             android:layout_alignParentLeft="true"
             android:layout_margin="8dp"
-            bind:error="@{@drawable/sparkle_pattern}"
-            bind:placeholder="@{@drawable/sparkle_pattern}"
+            bind:error="@{achievementViewModel.profilePlaceholder}"
+            bind:placeholder="@{achievementViewModel.profilePlaceholder}"
             bind:profilePhotoUrl="@{achievementViewModel.authorProfilePhoto}"/>
 
         <TextView
