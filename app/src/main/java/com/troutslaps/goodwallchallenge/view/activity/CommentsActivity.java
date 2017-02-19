@@ -46,6 +46,13 @@ public class CommentsActivity extends AppCompatActivity implements CommentsFragm
     }
 
     @Override
+    public void onAchievementUpdated(Achievement achievement) {
+        String title = String.format(getString(R.string.lbl_comments_toolbar), achievement
+                .getCommentsCount());
+        getSupportActionBar().setTitle(title);
+    }
+
+    @Override
     public void onCongratsClicked(Achievement achievement) {
         // do nothing
     }

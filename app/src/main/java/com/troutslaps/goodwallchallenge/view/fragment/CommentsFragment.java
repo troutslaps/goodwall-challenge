@@ -83,6 +83,8 @@ public class CommentsFragment extends Fragment {
                     } else {
                         commentsAdapter.notifyDataSetChanged();
                     }
+
+                    listener.onAchievementUpdated(achievement);
                     commentsRv.scrollToPosition(commentsAdapter.getItemCount()-1);
                     binding.setVariable(BR.viewModel, new AchievementViewModel
                             (getContext(),
@@ -107,5 +109,7 @@ public class CommentsFragment extends Fragment {
 
     public interface CommentsFragmentListener {
         int getAchievementId();
+
+        void onAchievementUpdated(Achievement achievement);
     }
 }
