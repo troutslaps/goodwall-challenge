@@ -3,10 +3,10 @@ package com.troutslaps.goodwallchallenge.viewmodel;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.v4.content.res.ResourcesCompat;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 
 import com.mikepenz.goodwall_typeface_library.GoodWall;
@@ -20,7 +20,6 @@ import com.troutslaps.goodwallchallenge.model.Location;
 import com.troutslaps.goodwallchallenge.model.Photo;
 import com.troutslaps.goodwallchallenge.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Sort;
@@ -121,6 +120,7 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
         return isExpanded ? context.getString(R.string.lbl_toggle_close) : context.getString(R
                 .string.lbl_toggle_expand);
     }
+
 
     public View.OnClickListener toggleAchievementBody() {
         return new View.OnClickListener() {
@@ -285,8 +285,10 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onAddCommentButtonClicked(achievement, newComment, achievement.getAuthor
-                        ());
+                if (newComment != null && !newComment.isEmpty()) {
+                    listener.onAddCommentButtonClicked(achievement, newComment, achievement
+                            .getAuthor());
+                }
             }
         };
     }

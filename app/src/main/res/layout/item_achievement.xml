@@ -33,6 +33,7 @@
         <TextView
             android:id="@+id/iv_author_name"
             style="@style/AppTheme.ClickableText"
+            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/iv_author_photo"
@@ -92,8 +93,10 @@
             android:layout_above="@+id/txt_achievement_body"
             android:layout_marginLeft="16dp"
             android:background="@drawable/congrats_button_background"
+            android:clickable="true"
             android:drawablePadding="16dp"
             android:drawableRight="@{achievementViewModel.congratsDrawable}"
+            android:foreground="?attr/selectableItemBackground"
             android:onClick="@{achievementViewModel.onCongratsClicked()}"
             android:paddingLeft="32dp"
             android:paddingRight="32dp"
@@ -122,27 +125,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_achievement_photo"
+            android:ellipsize="end"
+            android:maxLines="@{achievementViewModel.maxLines}"
             android:paddingBottom="2dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="16dp"
-            android:ellipsize="end"
-            android:maxLines="@{achievementViewModel.maxLines}"
             android:text="@{achievementViewModel.achievementBody}"/>
+
         <TextView
             android:id="@+id/txt_expand_collapse_toggle"
             style="@style/AppTheme.LikeButtonTextStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
+            android:layout_below="@+id/txt_achievement_body"
             android:clickable="true"
             android:onClick="@{achievementViewModel.toggleAchievementBody()}"
-            android:visibility="@{achievementViewModel.toggleControlVisibility}"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingTop="0dp"
             android:text="@{achievementViewModel.toggleControlText}"
-            android:layout_below="@+id/txt_achievement_body"/>
+            android:visibility="@{achievementViewModel.toggleControlVisibility}"/>
 
         <TextView
             android:id="@+id/txt_achievement_comments"
@@ -154,13 +158,16 @@
             android:paddingBottom="4dp"
             android:paddingLeft="16dp"
             android:paddingTop="4dp"
+            android:clickable="true"
             android:text="@{achievementViewModel.commentsDisplay}"
+            android:textColor="@drawable/info"
             android:textStyle="bold"/>
 
 
         <TextView
             android:id="@+id/txt_first_comment_author"
             style="@style/AppTheme.ClickableText"
+            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_achievement_comments"
@@ -192,6 +199,7 @@
         <TextView
             android:id="@+id/txt_second_comment_author"
             style="@style/AppTheme.ClickableText"
+            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_first_comment_author"

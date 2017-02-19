@@ -31,6 +31,8 @@
         android:layout_gravity="bottom|end"
         android:scaleType="center"
         android:layout_margin="@dimen/fab_margin"
+        android:clickable="true"
+        android:background="@drawable/bg_primary"
         app:ico_color="@color/colorTxtTitle"
         app:ico_icon="gdw-Plus-14"
         app:ico_size="12dp"/>

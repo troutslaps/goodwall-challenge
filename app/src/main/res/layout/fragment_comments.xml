@@ -15,7 +15,7 @@
         android:id="@+id/content_comments"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/colorBackground"
+        android:background="@android:color/transparent"
         tools:context="com.troutslaps.goodwallchallenge.view.fragment.CommentsFragment"
         tools:showIn="@layout/activity_comments">
 
@@ -26,13 +26,18 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             bind:commentViewModel="@{viewModel}"/>
-
+        <View
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/achievement"
+            android:layout_height="0.2dp"
+            android:background="@color/colorDivider"/>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/txt_comment"
-            android:layout_below="@+id/achievement"
+            android:layout_below="@+id/divider"
             android:layout_margin="0dp"
             android:clipToPadding="true"
             android:padding="0dp"/>
@@ -44,7 +49,6 @@
             style="@style/AppTheme.CommentEditText"
             android:layout_width="match_parent"
             android:maxHeight="100dp"
-
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:text="@={viewModel.newComment}"/>

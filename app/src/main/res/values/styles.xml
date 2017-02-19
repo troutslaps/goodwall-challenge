@@ -56,7 +56,7 @@
         <item name="android:textColor">@color/colorTxtBody</item>
     </style>
     <style name="AppTheme.ClickableText" parent="AppTheme.TextAppearanceMedium">
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@drawable/clickable</item>
     </style>
     <style name="AppTheme.PostInfo" parent="AppTheme.TextAppearanceSmall">
         <item name="android:textColor">@color/colorTxtInfo</item>
@@ -76,7 +76,7 @@
     <style name="AppTheme.CongratsTextStyle" parent="AppTheme.ClickableText"/>
 
     <style name="AppTheme.LikeButtonTextStyle" parent="AppTheme.TextAppearanceSmall">
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@drawable/clickable</item>
     </style>
 
     <style name="AppTheme.CommentEditText" parent="Widget.AppCompat.EditText">
@@ -93,12 +93,14 @@
     </style>
 
     <style name="AppTheme.ContactActionButton">
+        <item name="elevation">0dp</item>
         <item name="android:gravity">left</item>
         <item name="android:padding">16dp</item>
         <item name="android:drawablePadding">16dp</item>
-        <item name="android:background">@color/colorTxtTitle</item>
+        <item name="android:background">@drawable/bg_white</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
-        <item name="android:textColor">@color/colorTxtInfo</item>
+        <item name="android:textColor">@drawable/info</item>
     </style>
 
 
