@@ -30,16 +30,19 @@ import io.realm.Sort;
  */
 
 public class AchievementViewModel extends BaseObservable implements PostViewModelInterface {
-    private final static int NumberOfComments = 2;
+    private static final int MaxLines = 3;
+    private static final int MaxCharacters = 177;
     private static final String TAG = AchievementViewModel.class.getSimpleName();
     private Context context;
     private Achievement achievement;
     private CommentViewModel firstComment;
     private CommentViewModel secondComment;
     private Listener listener;
+    private boolean isExpanded;
 
     @Bindable
     public String newComment;
+
 
     public AchievementViewModel(Context context, Achievement achievement, Listener listener) {
         this.context = context;
@@ -73,22 +76,23 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
 
     public void setAchievement(Achievement achievement) {
         this.achievement = achievement;
+        this.isExpanded = false;
         List<Comment> lastComments = achievement.getComments().sort(Constants.Fields.Created,
                 Sort.DESCENDING);
 
-        if(getSecondComment() == null) {
+        if (getSecondComment() == null) {
             setSecondComment(new CommentViewModel(null, context, listener));
         }
-        if(lastComments.size() > 0 && lastComments.get(0) != null) {
+        if (lastComments.size() > 0 && lastComments.get(0) != null) {
             getSecondComment().setComment(lastComments.get(0));
         } else {
             getSecondComment().setComment(null);
         }
 
-        if(getFirstComment() == null) {
+        if (getFirstComment() == null) {
             setFirstComment(new CommentViewModel(null, context, listener));
         }
-        if(lastComments.size() > 1 && lastComments.get(1) != null) {
+        if (lastComments.size() > 1 && lastComments.get(1) != null) {
             getFirstComment().setComment(lastComments.get(1));
         } else {
             getFirstComment().setComment(null);
@@ -96,10 +100,42 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
         notifyChange();
     }
 
+    @Bindable
+    public boolean getIsExpanded() {
+        return isExpanded;
+    }
+
+    @Bindable
+    public int getMaxLines() {
+        return getAchievementBody().length() > MaxCharacters ? (isExpanded ? Integer.MAX_VALUE :
+                MaxLines) : Integer.MAX_VALUE;
+    }
+
+    @Bindable
+    public int getToggleControlVisibility() {
+        return getAchievementBody().length() > MaxCharacters ? View.VISIBLE : View.GONE;
+    }
+
+    @Bindable
+    public String getToggleControlText() {
+        return isExpanded ? context.getString(R.string.lbl_toggle_close) : context.getString(R
+                .string.lbl_toggle_expand);
+    }
+
+    public View.OnClickListener toggleAchievementBody() {
+        return new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                isExpanded = !isExpanded;
+                notifyChange();
+            }
+        };
+    }
 
     @Bindable
     public String getPhotoUrl() {
-        if(achievement.getPictures() != null && achievement.getPictures().size() > 0) {
+        if (achievement.getPictures() != null && achievement.getPictures().size() > 0) {
             return Utils.getRandomPhoto(achievement.getPictures().get(0).getName());
         }
         return null;
@@ -161,7 +197,7 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
 
     @Bindable
     public Drawable getLikeDrawable() {
-        if(achievement.getHasLiked()){
+        if (achievement.getHasLiked()) {
             return new IconicsDrawable(context).icon(GoodWall.Icon.gdw_HeartFilled20)
                     .color(ResourcesCompat.getColor(context.getResources(), R.color
                             .colorPrimary, null))

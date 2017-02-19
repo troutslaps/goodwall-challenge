@@ -18,4 +18,6 @@
     <string name="lbl_send_a_message">Send a Message</string>
     <string name="lbl_report_or_block">Report or Block</string>
     <string name="lbl_comments_toolbar">Comments (%d)</string>
+    <string name="lbl_toggle_close">Close</string>
+    <string name="lbl_toggle_expand">See More</string>
 </resources>
