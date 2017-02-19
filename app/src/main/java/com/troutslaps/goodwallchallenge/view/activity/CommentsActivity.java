@@ -3,6 +3,7 @@ package com.troutslaps.goodwallchallenge.view.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -24,14 +25,14 @@ import io.realm.Realm;
 public class CommentsActivity extends AppCompatActivity implements CommentsFragment
         .CommentsFragmentListener, AchievementViewModel.Listener, UserViewModel.Listener {
 
-    private BottomSheetBehavior bottomSheetBehavior;
-
+    private UserBottomSheetDialogFragment bottomSheetDialogFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comments);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -92,25 +93,32 @@ public class CommentsActivity extends AppCompatActivity implements CommentsFragm
 
     @Override
     public void onAuthorClicked(User user) {
-        UserBottomSheetDialogFragment bottomSheetDialogFragment = new
-                UserBottomSheetDialogFragment();
+        if(bottomSheetDialogFragment == null) {
+            bottomSheetDialogFragment = new
+                    UserBottomSheetDialogFragment();
+        }
         bottomSheetDialogFragment.setUserViewModel(new UserViewModel(user, this, this));
         bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment
                 .getTag());
+
+
     }
 
     @Override
     public void onSendMessageClicked(User recipient) {
-
+        bottomSheetDialogFragment.dismiss();
+        // do nothing
     }
 
     @Override
     public void onViewProfileClicked(User profile) {
-
+        bottomSheetDialogFragment.dismiss();
+        // do nothing
     }
 
     @Override
     public void onReportOrBlockClicked(User profile) {
-
+        bottomSheetDialogFragment.dismiss();
+        // do nothing
     }
 }
