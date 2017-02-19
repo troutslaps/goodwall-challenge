@@ -162,5 +162,7 @@ public class MainActivity extends AppCompatActivity implements AchievementRestCl
         Intent i = new Intent(this, CommentsActivity.class);
         i.putExtra(Constants.Fields.Id, achievement.getId());
         startActivity(i);
+        overridePendingTransition(R.anim.animation_enter,
+                R.anim.animation_leave);
     }
 }
