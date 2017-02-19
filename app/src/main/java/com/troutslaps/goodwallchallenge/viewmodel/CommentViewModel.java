@@ -3,6 +3,7 @@ package com.troutslaps.goodwallchallenge.viewmodel;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.View;
 
@@ -30,6 +31,16 @@ public class CommentViewModel extends BaseObservable implements PostViewModelInt
     @Bindable
     public int getVisibility() {
         return comment != null ? View.VISIBLE : View.GONE;
+    }
+
+    @Bindable
+    @Override
+    public Drawable getProfilePlaceholder() {
+        if(comment != null) {
+            return Utils.getRandomProfilePlaceholder(context, comment.getAuthor().getId());
+        } else {
+            return null;
+        }
     }
 
     @Bindable

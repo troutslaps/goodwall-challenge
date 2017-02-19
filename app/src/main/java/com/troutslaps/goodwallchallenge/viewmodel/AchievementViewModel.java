@@ -56,6 +56,7 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
         this.secondComment = secondComment;
     }
 
+
     @Bindable
     public CommentViewModel getFirstComment() {
         return firstComment;
@@ -176,6 +177,13 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
     public String getLikeCount() {
         return Integer.toString(achievement.getLikeCount());
     }
+
+    @Bindable
+    @Override
+    public Drawable getProfilePlaceholder() {
+        return Utils.getRandomProfilePlaceholder(context, achievement.getAuthor().getId());
+    }
+
     @Bindable
     @Override
     public String getAuthorProfilePhoto() {

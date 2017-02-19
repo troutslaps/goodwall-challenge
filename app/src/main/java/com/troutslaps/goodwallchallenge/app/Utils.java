@@ -29,11 +29,15 @@ import java.util.Random;
 public class Utils {
 
     private static final String TAG = Utils.class.getSimpleName();
+    private static HashMap<String, Integer> ProfilePlaceholdersMap = new HashMap<>();
     private static HashMap<String, String> PhotoUrls = new HashMap<>();
     private static HashMap<String, String> ProfilePhotoUrls = new HashMap<>();
     public static int[] Placeholders = {R.drawable.img_placeholder_green, R.drawable
             .img_placeholder_red, R.drawable.img_placeholder_violet,
             R.drawable.img_placeholder_yellow};
+    public static int[] ProfilePlaceholders = {R.drawable.profile_placeholder_green, R.drawable
+            .profile_placeholder_red, R.drawable.profile_placeholder_violet,
+            R.drawable.profile_placeholder_yellow};
 
     private static ThreadLocal<SimpleDateFormat> sdfForApiResponse = new
             ThreadLocal<SimpleDateFormat>() {
@@ -61,6 +65,8 @@ public class Utils {
                 }
 
             };
+
+
 
 
     public static class DateTime {
@@ -162,5 +168,17 @@ public class Utils {
     public static Drawable getRandomPlaceholder(Context context) {
         int index = new Random().nextInt(Placeholders.length);
         return ResourcesCompat.getDrawable(context.getResources(), Placeholders[index], null);
+    }
+
+    public static Drawable getRandomProfilePlaceholder(Context context, int userId) {
+        int index;
+        if(ProfilePlaceholdersMap.containsKey(Integer.toString(userId))) {
+            index = ProfilePlaceholdersMap.get(Integer.toString(userId));
+        } else {
+            index = new Random().nextInt(ProfilePlaceholders.length);
+            ProfilePlaceholdersMap.put(Integer.toString(userId), index);
+        }
+        return ResourcesCompat.getDrawable(context.getResources(), ProfilePlaceholders[index],
+                null);
     }
 }
