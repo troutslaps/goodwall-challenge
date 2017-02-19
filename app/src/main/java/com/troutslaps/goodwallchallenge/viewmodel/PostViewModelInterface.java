@@ -1,6 +1,6 @@
 package com.troutslaps.goodwallchallenge.viewmodel;
 
-import android.databinding.Bindable;
+import android.graphics.drawable.Drawable;
 import android.view.View;
 
 /**
@@ -8,6 +8,9 @@ import android.view.View;
  */
 
 public interface PostViewModelInterface {
+
+    Drawable getProfilePlaceholder();
+
     String getAuthorProfilePhoto();
 
     String getAuthorName();
@@ -16,5 +19,5 @@ public interface PostViewModelInterface {
 
     String getCommentTime();
 
-    View.OnClickListener onAuthorNameClicked();
+    View.OnClickListener onAuthorClicked();
 }

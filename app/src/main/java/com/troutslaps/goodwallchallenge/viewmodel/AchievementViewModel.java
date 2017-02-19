@@ -3,9 +3,10 @@ package com.troutslaps.goodwallchallenge.viewmodel;
 import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
+import android.support.v4.content.res.ResourcesCompat;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 
 import com.mikepenz.goodwall_typeface_library.GoodWall;
@@ -19,7 +20,6 @@ import com.troutslaps.goodwallchallenge.model.Location;
 import com.troutslaps.goodwallchallenge.model.Photo;
 import com.troutslaps.goodwallchallenge.model.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import io.realm.Sort;
@@ -29,16 +29,19 @@ import io.realm.Sort;
  */
 
 public class AchievementViewModel extends BaseObservable implements PostViewModelInterface {
-    private final static int NumberOfComments = 2;
+    private static final int MaxLines = 3;
+    private static final int MaxCharacters = 177;
     private static final String TAG = AchievementViewModel.class.getSimpleName();
     private Context context;
     private Achievement achievement;
     private CommentViewModel firstComment;
     private CommentViewModel secondComment;
     private Listener listener;
+    private boolean isExpanded;
 
     @Bindable
     public String newComment;
+
 
     public AchievementViewModel(Context context, Achievement achievement, Listener listener) {
         this.context = context;
@@ -54,6 +57,7 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
     public void setSecondComment(CommentViewModel secondComment) {
         this.secondComment = secondComment;
     }
+
 
     @Bindable
     public CommentViewModel getFirstComment() {
@@ -71,22 +75,23 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
 
     public void setAchievement(Achievement achievement) {
         this.achievement = achievement;
+        this.isExpanded = false;
         List<Comment> lastComments = achievement.getComments().sort(Constants.Fields.Created,
                 Sort.DESCENDING);
 
-        if(getSecondComment() == null) {
+        if (getSecondComment() == null) {
             setSecondComment(new CommentViewModel(null, context, listener));
         }
-        if(lastComments.size() > 0 && lastComments.get(0) != null) {
+        if (lastComments.size() > 0 && lastComments.get(0) != null) {
             getSecondComment().setComment(lastComments.get(0));
         } else {
             getSecondComment().setComment(null);
         }
 
-        if(getFirstComment() == null) {
+        if (getFirstComment() == null) {
             setFirstComment(new CommentViewModel(null, context, listener));
         }
-        if(lastComments.size() > 1 && lastComments.get(1) != null) {
+        if (lastComments.size() > 1 && lastComments.get(1) != null) {
             getFirstComment().setComment(lastComments.get(1));
         } else {
             getFirstComment().setComment(null);
@@ -94,10 +99,43 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
         notifyChange();
     }
 
+    @Bindable
+    public boolean getIsExpanded() {
+        return isExpanded;
+    }
+
+    @Bindable
+    public int getMaxLines() {
+        return getAchievementBody().length() > MaxCharacters ? (isExpanded ? Integer.MAX_VALUE :
+                MaxLines) : Integer.MAX_VALUE;
+    }
+
+    @Bindable
+    public int getToggleControlVisibility() {
+        return getAchievementBody().length() > MaxCharacters ? View.VISIBLE : View.GONE;
+    }
+
+    @Bindable
+    public String getToggleControlText() {
+        return isExpanded ? context.getString(R.string.lbl_toggle_close) : context.getString(R
+                .string.lbl_toggle_expand);
+    }
+
+
+    public View.OnClickListener toggleAchievementBody() {
+        return new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                isExpanded = !isExpanded;
+                notifyChange();
+            }
+        };
+    }
 
     @Bindable
     public String getPhotoUrl() {
-        if(achievement.getPictures() != null && achievement.getPictures().size() > 0) {
+        if (achievement.getPictures() != null && achievement.getPictures().size() > 0) {
             return Utils.getRandomPhoto(achievement.getPictures().get(0).getName());
         }
         return null;
@@ -148,6 +186,41 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
     }
 
     @Bindable
+    public Drawable getCongratsDrawable() {
+        return Utils.getCongratsDrawable(context);
+    }
+
+    @Bindable
+    public Drawable getPlaceholder() {
+        return Utils.getRandomPlaceholder(context);
+    }
+
+    @Bindable
+    public Drawable getLikeDrawable() {
+        if (achievement.getHasLiked()) {
+            return new IconicsDrawable(context).icon(GoodWall.Icon.gdw_HeartFilled20)
+                    .color(ResourcesCompat.getColor(context.getResources(), R.color
+                            .colorPrimary, null))
+                    .sizeDp(18);
+        }
+        return new IconicsDrawable(context).icon(GoodWall.Icon.gdw_HeartOutline20)
+                .color(ResourcesCompat.getColor(context.getResources(), R.color.colorPrimary,
+                        null))
+                .sizeDp(18);
+    }
+
+    @Bindable
+    public String getLikeCount() {
+        return Integer.toString(achievement.getLikeCount());
+    }
+
+    @Bindable
+    @Override
+    public Drawable getProfilePlaceholder() {
+        return Utils.getRandomProfilePlaceholder(context, achievement.getAuthor().getId());
+    }
+
+    @Bindable
     @Override
     public String getAuthorProfilePhoto() {
         if (achievement.getAuthor() != null && achievement.getAuthor().getPicture() != null) {
@@ -156,10 +229,11 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
         }
         return null;
     }
+
     @Bindable
     @Override
     public String getCommentBody() {
-        return achievement.getBody();
+        return achievement.getTitle();
     }
 
     @Bindable
@@ -170,12 +244,12 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
 
 
     @Override
-    public View.OnClickListener onAuthorNameClicked() {
+    public View.OnClickListener onAuthorClicked() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                listener.onAuthorNameClicked(achievement.getAuthor());
+                listener.onAuthorClicked(achievement.getAuthor());
             }
         };
     }
@@ -211,8 +285,10 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onAddCommentButtonClicked(achievement, newComment, achievement.getAuthor
-                        ());
+                if (newComment != null && !newComment.isEmpty()) {
+                    listener.onAddCommentButtonClicked(achievement, newComment, achievement
+                            .getAuthor());
+                }
             }
         };
     }
