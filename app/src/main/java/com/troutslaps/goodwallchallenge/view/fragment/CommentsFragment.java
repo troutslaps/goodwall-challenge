@@ -58,6 +58,7 @@ public class CommentsFragment extends Fragment {
     private void setupRecyclerView(View v) {
         commentsRv = (RecyclerView) v.findViewById(R.id.list);
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
+        llm.setStackFromEnd(true);
         commentsRv.setLayoutManager(llm);
 
     }
@@ -78,7 +79,7 @@ public class CommentsFragment extends Fragment {
                 public void onChange(Achievement element) {
                     if (commentsAdapter == null) {
                         commentsAdapter = new CommentAdapter(getActivity(), achievement
-                                .getComments().sort(Constants.Fields.Created, Sort.DESCENDING));
+                                .getComments().sort(Constants.Fields.Created, Sort.ASCENDING));
                         commentsRv.setAdapter(commentsAdapter);
                     } else {
                         commentsAdapter.notifyDataSetChanged();
