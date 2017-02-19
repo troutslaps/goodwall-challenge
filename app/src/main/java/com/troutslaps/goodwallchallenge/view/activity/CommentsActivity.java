@@ -2,6 +2,7 @@ package com.troutslaps.goodwallchallenge.view.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.BottomSheetBehavior;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -12,14 +13,18 @@ import com.troutslaps.goodwallchallenge.model.Achievement;
 import com.troutslaps.goodwallchallenge.model.Comment;
 import com.troutslaps.goodwallchallenge.model.User;
 import com.troutslaps.goodwallchallenge.view.fragment.CommentsFragment;
+import com.troutslaps.goodwallchallenge.view.fragment.UserBottomSheetDialogFragment;
 import com.troutslaps.goodwallchallenge.viewmodel.AchievementViewModel;
+import com.troutslaps.goodwallchallenge.viewmodel.UserViewModel;
 
 import java.util.Date;
 
 import io.realm.Realm;
 
 public class CommentsActivity extends AppCompatActivity implements CommentsFragment
-        .CommentsFragmentListener, AchievementViewModel.Listener {
+        .CommentsFragmentListener, AchievementViewModel.Listener, UserViewModel.Listener {
+
+    private BottomSheetBehavior bottomSheetBehavior;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +64,12 @@ public class CommentsActivity extends AppCompatActivity implements CommentsFragm
             @Override
             public void execute(Realm realm) {
                 Achievement achievementLocal = realm.where(Achievement.class).equalTo(Constants
-                                .Fields
-                                .Id, achievementId).findFirst();
+                        .Fields
+                        .Id, achievementId).findFirst();
                 User randomUser = User.getRandomUser(realm);
                 Number currentCommentId = realm.where(Comment.class).max(Constants.Fields.Id);
                 int nextId;
-                if(currentCommentId == null) {
+                if (currentCommentId == null) {
                     nextId = 1;
                 } else {
                     nextId = currentCommentId.intValue() + 1;
@@ -86,7 +91,26 @@ public class CommentsActivity extends AppCompatActivity implements CommentsFragm
     }
 
     @Override
-    public void onAuthorNameClicked(User user) {
-        // show bottom sheet
+    public void onAuthorClicked(User user) {
+        UserBottomSheetDialogFragment bottomSheetDialogFragment = new
+                UserBottomSheetDialogFragment();
+        bottomSheetDialogFragment.setUserViewModel(new UserViewModel(user, this, this));
+        bottomSheetDialogFragment.show(getSupportFragmentManager(), bottomSheetDialogFragment
+                .getTag());
+    }
+
+    @Override
+    public void onSendMessageClicked(User recipient) {
+
+    }
+
+    @Override
+    public void onViewProfileClicked(User profile) {
+
+    }
+
+    @Override
+    public void onReportOrBlockClicked(User profile) {
+
     }
 }

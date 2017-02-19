@@ -92,6 +92,15 @@
         <item name="colorControlHighlight">@android:color/transparent</item>
     </style>
 
+    <style name="AppTheme.ContactActionButton">
+        <item name="android:gravity">left</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:drawablePadding">16dp</item>
+        <item name="android:background">@color/colorTxtTitle</item>
+        <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
+        <item name="android:textColor">@color/colorTxtInfo</item>
+    </style>
+
 
 </resources>
 

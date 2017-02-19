@@ -208,12 +208,12 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
 
 
     @Override
-    public View.OnClickListener onAuthorNameClicked() {
+    public View.OnClickListener onAuthorClicked() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                listener.onAuthorNameClicked(achievement.getAuthor());
+                listener.onAuthorClicked(achievement.getAuthor());
             }
         };
     }

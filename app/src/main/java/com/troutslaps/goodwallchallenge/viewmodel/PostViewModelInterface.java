@@ -19,5 +19,5 @@ public interface PostViewModelInterface {
 
     String getCommentTime();
 
-    View.OnClickListener onAuthorNameClicked();
+    View.OnClickListener onAuthorClicked();
 }

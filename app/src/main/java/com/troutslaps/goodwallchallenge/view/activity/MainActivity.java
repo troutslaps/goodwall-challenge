@@ -154,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements AchievementRestCl
     }
 
     @Override
-    public void onAuthorNameClicked(User user) {
+    public void onAuthorClicked(User user) {
         // do nothing for now
     }
 

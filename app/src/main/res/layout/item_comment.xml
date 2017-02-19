@@ -12,11 +12,13 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:clickable="true"
+        android:onClick="@{commentViewModel.onAuthorClicked()}"
         android:orientation="vertical"
-        android:paddingTop="8dp"
-        android:paddingRight="8dp"
         android:paddingBottom="8dp"
-        android:background="@android:color/transparent">
+        android:paddingRight="8dp"
+        android:paddingTop="8dp">
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/iv_profile_photo"
@@ -31,33 +33,32 @@
 
         <TextView
             android:id="@+id/txt_comment_author"
+            style="@style/AppTheme.ClickableText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/iv_profile_photo"
-            android:onClick="@{commentViewModel.onAuthorNameClicked()}"
             android:padding="4dp"
-            android:text="@{commentViewModel.getAuthorName()}"
-            style="@style/AppTheme.ClickableText"/>
+            android:text="@{commentViewModel.getAuthorName()}"/>
 
         <TextView
             android:id="@+id/txt_comment_time"
+            style="@style/AppTheme.CommentInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/txt_comment_author"
             android:layout_toRightOf="@+id/txt_comment_author"
             android:padding="4dp"
-            android:text="@{commentViewModel.getCommentTime()}"
-            style="@style/AppTheme.CommentInfo"/>
+            android:text="@{commentViewModel.getCommentTime()}"/>
 
         <TextView
             android:id="@+id/txt_comment_body"
+            style="@style/AppTheme.PostBodyText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_comment_author"
             android:layout_toRightOf="@+id/iv_profile_photo"
             android:padding="4dp"
-            android:text="@{commentViewModel.getCommentBody()}"
-            style="@style/AppTheme.PostBodyText"/>
+            android:text="@{commentViewModel.getCommentBody()}"/>
 
     </RelativeLayout>
 </layout>

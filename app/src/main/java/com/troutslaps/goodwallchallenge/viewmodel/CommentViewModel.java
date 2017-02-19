@@ -74,12 +74,12 @@ public class CommentViewModel extends BaseObservable implements PostViewModelInt
     }
 
     @Override
-    public View.OnClickListener onAuthorNameClicked() {
+    public View.OnClickListener onAuthorClicked() {
         return new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (comment != null) {
-                    listener.onAuthorNameClicked(comment.getAuthor());
+                    listener.onAuthorClicked(comment.getAuthor());
                 }
             }
         };
@@ -90,6 +90,6 @@ public class CommentViewModel extends BaseObservable implements PostViewModelInt
     }
 
     public interface Listener {
-        public void onAuthorNameClicked(User user);
+        void onAuthorClicked(User user);
     }
 }

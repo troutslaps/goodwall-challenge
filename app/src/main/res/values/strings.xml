@@ -14,4 +14,7 @@
     <string name="achievement_date_start">%s</string>
     <string name="add_comment">Send</string>
     <string name="txt_congrats">Congrats!</string>
+    <string name="lbl_view_profile">View Profile</string>
+    <string name="lbl_send_a_message">Send a Message</string>
+    <string name="lbl_report_or_block">Report or Block</string>
 </resources>
