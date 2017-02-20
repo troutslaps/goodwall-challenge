@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="android.view.View"/>
+
+        <import type="com.troutslaps.goodwallchallenge.viewmodel.CommentViewModel"/>
+
+        <variable
+            name="achievementViewModel"
+            type="com.troutslaps.goodwallchallenge.viewmodel.AchievementViewModel"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:background="@color/colorTxtTitle"
+        android:orientation="vertical">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_author_photo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="8dp"
+            bind:error="@{achievementViewModel.profilePlaceholder}"
+            bind:placeholder="@{achievementViewModel.profilePlaceholder}"
+            bind:profilePhotoUrl="@{achievementViewModel.authorProfilePhoto}"/>
+
+        <TextView
+            android:id="@+id/iv_author_name"
+            style="@style/AppTheme.ClickableText"
+            android:clickable="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_author_photo"
+            android:paddingTop="16dp"
+            android:text="@{achievementViewModel.authorName}"/>
+
+        <TextView
+            android:id="@+id/iv_author_location"
+            sytle="@style/AppTheme.PostInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/iv_author_name"
+            android:layout_below="@+id/iv_author_name"
+            android:text="@{achievementViewModel.location}"/>
+
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_achievement_photo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_author_photo"
+            android:layout_marginBottom="24dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/sparkle_pattern"
+            bind:error="@{@drawable/sparkle_pattern}"
+            bind:imageUrl="@{achievementViewModel.photoUrl}"
+            bind:placeholder="@{achievementViewModel.placeholder}"/>
+
+        <TextView
+            android:id="@+id/txt_achievement_date"
+            style="@style/AppTheme.AchievementDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/txt_achievement_title"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:text="@{achievementViewModel.achievementDate}"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/txt_achievement_title"
+            style="@style/AppTheme.AchievementTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/btn_congrats"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="16dp"
+            android:text="@{achievementViewModel.achievementTitle}"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/btn_congrats"
+            style="@style/AppTheme.CongratsButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/txt_achievement_body"
+            android:layout_marginLeft="16dp"
+            android:background="@drawable/congrats_button_background"
+            android:clickable="true"
+            android:drawablePadding="16dp"
+            android:drawableRight="@{achievementViewModel.congratsDrawable}"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{achievementViewModel.onCongratsClicked()}"
+            android:paddingLeft="32dp"
+            android:paddingRight="32dp"
+            android:text="@string/txt_congrats"/>
+
+        <Button
+            android:id="@+id/btn_like"
+            style="@style/AppTheme.LikeButton"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_alignBottom="@+id/btn_congrats"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:drawablePadding="0dp"
+            android:drawableTop="@{achievementViewModel.likeDrawable}"
+            android:elevation="3dp"
+            android:paddingBottom="8dp"
+            android:paddingTop="16dp"
+            android:text="@{achievementViewModel.likeCount}"
+            />
+
+        <TextView
+            android:id="@+id/txt_achievement_body"
+            style="@style/AppTheme.PostBodyText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iv_achievement_photo"
+            android:ellipsize="end"
+            android:maxLines="@{achievementViewModel.maxLines}"
+            android:paddingBottom="2dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp"
+            android:text="@{achievementViewModel.achievementBody}"/>
+
+        <TextView
+            android:id="@+id/txt_expand_collapse_toggle"
+            style="@style/AppTheme.LikeButtonTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_achievement_body"
+            android:clickable="true"
+            android:onClick="@{achievementViewModel.toggleAchievementBody()}"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="0dp"
+            android:text="@{achievementViewModel.toggleControlText}"
+            android:visibility="@{achievementViewModel.toggleControlVisibility}"/>
+
+        <TextView
+            android:id="@+id/txt_achievement_comments"
+            sytle="@style/AppTheme.PostInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_expand_collapse_toggle"
+            android:onClick="@{achievementViewModel.onCommentsClicked()}"
+            android:paddingBottom="4dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="4dp"
+            android:clickable="true"
+            android:text="@{achievementViewModel.commentsDisplay}"
+            android:textColor="@drawable/info"
+            android:textStyle="bold"/>
+
+
+        <TextView
+            android:id="@+id/txt_first_comment_author"
+            style="@style/AppTheme.ClickableText"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_achievement_comments"
+            android:onClick="@{achievementViewModel.firstComment != null ? achievementViewModel.firstComment.onAuthorClicked() : null}"
+            android:paddingBottom="4dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="4dp"
+            android:paddingTop="4dp"
+            android:text="@{achievementViewModel.firstComment.authorName}"
+            android:visibility="@{achievementViewModel.firstComment.visibility}"/>
+
+        <TextView
+            android:id="@+id/txt_first_comment_body"
+            style="@style/AppTheme.PostBodyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_achievement_comments"
+            android:layout_toRightOf="@+id/txt_first_comment_author"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingBottom="4dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="16dp"
+            android:paddingTop="4dp"
+            android:text="@{achievementViewModel.firstComment != null ? achievementViewModel.firstComment.commentBody : null}"
+            android:visibility="@{achievementViewModel.firstComment.visibility}"/>
+
+
+        <TextView
+            android:id="@+id/txt_second_comment_author"
+            style="@style/AppTheme.ClickableText"
+            android:clickable="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_first_comment_author"
+            android:onClick="@{achievementViewModel.secondComment != null ? achievementViewModel.secondComment.onAuthorClicked() : null}"
+            android:paddingBottom="4dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="4dp"
+            android:paddingTop="4dp"
+            android:text="@{achievementViewModel.secondComment != null ? achievementViewModel.secondComment.authorName : null}"
+            android:visibility="@{achievementViewModel.secondComment.visibility}"/>
+
+        <TextView
+            android:id="@+id/txt_second_comment_body"
+            style="@style/AppTheme.PostBodyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_first_comment_body"
+            android:layout_toRightOf="@+id/txt_second_comment_author"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingBottom="4dp"
+            android:paddingLeft="4dp"
+            android:paddingRight="16dp"
+            android:paddingTop="4dp"
+            android:text="@{achievementViewModel.secondComment != null ? achievementViewModel.secondComment.commentBody : null }"
+            android:visibility="@{achievementViewModel.secondComment.visibility}"/>
+
+        <TextView
+            android:id="@+id/txt_achievement_timeago"
+            sytle="@style/AppTheme.TimeAgo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_second_comment_author"
+            android:paddingBottom="8dp"
+            android:paddingLeft="16dp"
+            android:paddingTop="8dp"
+            android:text="@{achievementViewModel.postTimeAgo}"/>
+
+
+    </RelativeLayout>
+</layout>

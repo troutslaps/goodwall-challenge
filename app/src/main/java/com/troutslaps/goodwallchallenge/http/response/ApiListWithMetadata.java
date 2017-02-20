@@ -2,13 +2,14 @@ package com.troutslaps.goodwallchallenge.http.response;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by duchess on 12/02/2017.
  */
 
-public class ApiListWithMetadata<T> {
+public class ApiListWithMetadata<T> implements Serializable {
     @SerializedName("data")
     private List<T> data;
 

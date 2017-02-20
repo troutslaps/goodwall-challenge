@@ -2,6 +2,7 @@ package com.troutslaps.goodwallchallenge.model;
 
 import com.troutslaps.goodwallchallenge.app.Constants;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import io.realm.annotations.PrimaryKey;
  * Created by duchess on 11/02/2017.
  */
 
-public class Achievement extends RealmObject {
+public class Achievement extends RealmObject implements Serializable {
 
     @PrimaryKey
     int id;
@@ -28,6 +29,7 @@ public class Achievement extends RealmObject {
     Date modified;
     Date timelineDate;
     Date startDate;
+    Date endDate;
     int likeCount;
     int commentsCount;
     boolean hasLiked;
@@ -40,7 +42,9 @@ public class Achievement extends RealmObject {
     }
 
     public Achievement(int id, String slug, String title, String body, int color, Date created,
-                       Date modified, Date timelineDate, Date startDate, int likeCount, int
+                       Date modified, Date timelineDate, Date startDate, Date endDate, int
+                               likeCount,
+                       int
                                commentsCount, boolean hasLiked, Location location, User author,
                        RealmList<Photo> pictures, RealmList<Comment> comments) {
         this.id = id;
@@ -52,6 +56,8 @@ public class Achievement extends RealmObject {
         this.modified = modified;
         this.timelineDate = timelineDate;
         this.startDate = startDate;
+        this.endDate = endDate;
+
         this.likeCount = likeCount;
         this.commentsCount = commentsCount;
         this.hasLiked = hasLiked;
@@ -133,6 +139,14 @@ public class Achievement extends RealmObject {
         this.startDate = startDate;
     }
 
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
+
     public int getLikeCount() {
         return likeCount;
     }
@@ -190,8 +204,19 @@ public class Achievement extends RealmObject {
     }
 
     public void addComment(Comment comment) {
+
         getComments().add(comment);
         setCommentsCount(getComments().size());
+    }
+
+    public List<Comment> getLastComments(int count) {
+        List<Comment> lastComments = getComments().sort(Constants.Fields.Created, Sort
+                .DESCENDING);
+        if (lastComments.size() > count) {
+            return lastComments.subList(0, count);
+        } else {
+            return lastComments;
+        }
     }
 
     public static RealmResults<Achievement> getAllAchievements(Realm realm) {
@@ -204,5 +229,10 @@ public class Achievement extends RealmObject {
         Achievement achievement = realm.where(Achievement.class).equalTo(Constants.Fields.Id, id).
                 findFirstAsync();
         return achievement;
+    }
+
+    public static RealmResults<Comment> getComments(Realm realm, int id) {
+        return realm.where(Comment.class).equalTo(Constants.Fields.AchievementId, id).
+                findAllSortedAsync(Constants.Fields.Created, Sort.DESCENDING);
     }
 }

@@ -1,5 +1,6 @@
 package com.troutslaps.goodwallchallenge.http.client;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -15,6 +16,7 @@ import com.troutslaps.goodwallchallenge.http.response.ApiListWithMetadata;
 import com.troutslaps.goodwallchallenge.model.Achievement;
 import com.troutslaps.goodwallchallenge.model.Comment;
 
+import java.lang.ref.WeakReference;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
 import java.util.concurrent.Executors;
@@ -40,6 +42,7 @@ public class AchievementRestClient {
     private static AchievementRestClient INSTANCE;
     private ScheduledExecutorService executorService;
     private AchievementInterface achievementInterface;
+    private WeakReference<GetAchievementsCallback> callback;
 
     private AchievementRestClient() {
         OkHttpClient client;
@@ -63,50 +66,51 @@ public class AchievementRestClient {
                 (Comment.class, new CommentDeserializer()).create();
     }
 
-    public static AchievementRestClient getInstance() {
+    public static AchievementRestClient getInstance(GetAchievementsCallback callback) {
+        if(callback == null) {
+            throw new IllegalArgumentException("please provide callback object");
+        }
         if (INSTANCE == null) {
             INSTANCE = new AchievementRestClient();
         }
+
+        INSTANCE.callback = new WeakReference<GetAchievementsCallback>(callback);
         return INSTANCE;
     }
 
-    public void getAchievements(final Runnable uiSuccessCallback, final Runnable uiFailedCallback) {
+    public void getAchievements() {
         executorService.execute(new Runnable() {
 
             @Override
             public void run() {
                 Call<ApiListWithMetadata<Achievement>> call = achievementInterface
                         .getAchievements();
-                Log.d(TAG, call.request().url().toString());
-
+                callback.get().onProgressStarted(new Result(Result.Type.InProgress));
                 call.enqueue(new Callback<ApiListWithMetadata<Achievement>>() {
                     @Override
                     public void onResponse(Call<ApiListWithMetadata<Achievement>> call,
                                            final Response<ApiListWithMetadata<Achievement>>
                                                    response) {
-
-                        Realm realm = Realm.getDefaultInstance();
-                        realm.executeTransactionAsync(new Realm.Transaction() {
-                            @Override
-                            public void execute(Realm realm) {
-                                realm.copyToRealmOrUpdate(response.body().getData());
+                        if(response.isSuccessful()) {
+                            Bundle extras = new Bundle();
+                            extras.putSerializable(Constants.Fields.Achievements, response.body());
+                            callback.get().onSuccess(new Result(Result.Type.Success, extras));
+                        } else {
+                            if(response.code() == 404) {
+                                callback.get().onFailure(new Result(Result.Type.NotFound));
+                            } else {
+                                callback.get().onFailure(new Result(Result.Type.GenericError));
                             }
-
-                        });
-                        realm.close();
-                        if (uiSuccessCallback != null) {
-                            new Handler(Looper.getMainLooper()).post(uiSuccessCallback);
                         }
-
                     }
 
                     @Override
                     public void onFailure(Call<ApiListWithMetadata<Achievement>> call, Throwable
                             t) {
-
-
-                        if(uiFailedCallback != null) {
-                            new Handler(Looper.getMainLooper()).post(uiFailedCallback);
+                        if (t instanceof ConnectException | t instanceof UnknownHostException) {
+                            callback.get().onFailure(new Result(Result.Type.NoInternet));
+                        } else {
+                            callback.get().onFailure(new Result(Result.Type.GenericError));
                         }
                     }
                 });
@@ -116,5 +120,10 @@ public class AchievementRestClient {
         });
     }
 
+    public interface GetAchievementsCallback {
+        void onProgressStarted(Result result);
+        void onSuccess(Result result);
 
+        void onFailure(Result result);
+    }
 }

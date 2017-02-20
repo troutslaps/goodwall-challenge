@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context="com.troutslaps.goodwallchallenge.view.MainActivity">
+    tools:context="com.troutslaps.goodwallchallenge.view.activity.MainActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_height="wrap_content"
@@ -29,7 +29,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
+        android:scaleType="center"
         android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
+        android:clickable="true"
+        android:background="@drawable/bg_primary"
+        app:ico_color="@color/colorTxtTitle"
+        app:ico_icon="gdw-Plus-14"
+        app:ico_size="12dp"/>
 
 </android.support.design.widget.CoordinatorLayout>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="userViewModel"
+            type="com.troutslaps.goodwallchallenge.viewmodel.UserViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/btn_view_profile"
+            style="@style/AppTheme.ContactActionButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:drawableLeft="@{userViewModel.viewProfileDrawable}"
+            android:onClick="@{userViewModel.onViewProfileClicked()}"
+            android:text="@string/lbl_view_profile"/>
+
+        <TextView
+            android:id="@+id/btn_send_message"
+            style="@style/AppTheme.ContactActionButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:drawableLeft="@{userViewModel.sendMessageDrawable}"
+            android:onClick="@{userViewModel.onSendMessageClicked()}"
+            android:text="@string/lbl_send_a_message"/>
+
+        <TextView
+            android:id="@+id/btn_report_or_block"
+            style="@style/AppTheme.ContactActionButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:drawableLeft="@{userViewModel.reportBlockDrawable}"
+            android:onClick="@{userViewModel.onReportOrBlockClicked()}"
+            android:text="@string/lbl_report_or_block"/>
+
+    </LinearLayout>
+</layout>

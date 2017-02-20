@@ -3,6 +3,9 @@ apply plugin: 'realm-android'
 
 
 android {
+    dataBinding {
+        enabled = true
+    }
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
     defaultConfig {
@@ -39,5 +42,9 @@ dependencies {
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'
     compile 'com.google.android.gms:play-services-analytics:9.4.0'
     compile 'com.android.support:recyclerview-v7:25.0.0'
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'jp.wasabeef:glide-transformations:2.0.1'
+    compile 'com.scopely:fontain:1.0.0'
+    compile "com.mikepenz:iconics-core:2.8.2@aar"
+    compile project(':GoodWall')
 }

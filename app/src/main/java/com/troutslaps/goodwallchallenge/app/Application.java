@@ -1,5 +1,7 @@
 package com.troutslaps.goodwallchallenge.app;
 
+import com.scopely.fontain.Fontain;
+
 import io.realm.Realm;
 
 /**
@@ -12,5 +14,6 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
         Realm.init(getApplicationContext());
+        Fontain.init(this, "Karla");
     }
 }

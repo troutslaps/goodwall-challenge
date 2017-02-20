@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <variable
+            name="commentViewModel"
+            type="com.troutslaps.goodwallchallenge.viewmodel.PostViewModelInterface"/>
+    </data>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:background="@drawable/bg_comments"
+        android:foreground="?attr/selectableItemBackground"
+        android:onClick="@{commentViewModel.onAuthorClicked()}"
+        android:orientation="vertical"
+        android:paddingBottom="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="8dp">
+
+        <android.support.v7.widget.AppCompatImageView
+            android:id="@+id/iv_profile_photo"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="8dp"
+            android:adjustViewBounds="true"
+            bind:error="@{commentViewModel.profilePlaceholder}"
+            bind:placeholder="@{commentViewModel.profilePlaceholder}"
+            bind:profilePhotoUrl="@{commentViewModel.getAuthorProfilePhoto()}"/>
+
+        <TextView
+            android:id="@+id/txt_comment_author"
+            style="@style/AppTheme.ClickableText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/iv_profile_photo"
+            android:padding="4dp"
+            android:text="@{commentViewModel.getAuthorName()}"/>
+
+        <TextView
+            android:id="@+id/txt_comment_time"
+            style="@style/AppTheme.CommentInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/txt_comment_author"
+            android:layout_toRightOf="@+id/txt_comment_author"
+            android:padding="4dp"
+            android:text="@{commentViewModel.getCommentTime()}"/>
+
+        <TextView
+            android:id="@+id/txt_comment_body"
+            style="@style/AppTheme.PostBodyText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_comment_author"
+            android:layout_toRightOf="@+id/iv_profile_photo"
+            android:padding="4dp"
+            android:text="@{commentViewModel.getCommentBody()}"/>
+
+    </RelativeLayout>
+</layout>
