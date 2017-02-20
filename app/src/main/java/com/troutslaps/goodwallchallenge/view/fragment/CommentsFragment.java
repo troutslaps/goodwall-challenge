@@ -3,6 +3,7 @@ package com.troutslaps.goodwallchallenge.view.fragment;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -41,6 +42,8 @@ public class CommentsFragment extends Fragment {
     CommentAdapter commentsAdapter;
 
     Achievement achievement;
+    AchievementViewModel achievementViewModel;
+    String newComment;
 
     public CommentsFragment() {
     }
@@ -86,11 +89,18 @@ public class CommentsFragment extends Fragment {
                     }
 
                     listener.onAchievementUpdated(achievement);
-                    commentsRv.scrollToPosition(commentsAdapter.getItemCount()-1);
-                    binding.setVariable(BR.viewModel, new AchievementViewModel
-                            (getContext(),
-                                    achievement, (AchievementViewModel.Listener) getActivity()));
-
+                    commentsRv.scrollToPosition(commentsAdapter.getItemCount() - 1);
+                    if (achievementViewModel == null) {
+                        achievementViewModel = new AchievementViewModel
+                                (getContext(), achievement, (AchievementViewModel.Listener)
+                                        getActivity());
+                        achievementViewModel.setNewComment(newComment);
+                        binding.setVariable(BR.viewModel, achievementViewModel);
+                    } else {
+                        achievementViewModel.setNewComment(newComment);
+                        binding.notifyChange();
+                    }
+                    newComment = null;
 
                 }
             };
@@ -98,6 +108,25 @@ public class CommentsFragment extends Fragment {
 
         } else {
             throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        newComment = achievementViewModel.getNewComment();
+        outState.putString(Constants.Fields.PendingComment, newComment);
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            newComment = savedInstanceState.getString(Constants.Fields.PendingComment);
+            if (achievementViewModel != null) {
+                achievementViewModel.setNewComment(newComment);
+                achievementViewModel.notifyChange();
+            }
         }
     }
 
