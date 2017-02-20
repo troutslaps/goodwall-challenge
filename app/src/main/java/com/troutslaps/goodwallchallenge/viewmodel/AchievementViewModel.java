@@ -4,11 +4,14 @@ import android.content.Context;
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
 import android.graphics.drawable.Drawable;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.support.v4.content.res.ResourcesCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 
+import com.android.databinding.library.baseAdapters.BR;
 import com.mikepenz.goodwall_typeface_library.GoodWall;
 import com.mikepenz.iconics.IconicsDrawable;
 import com.troutslaps.goodwallchallenge.R;
@@ -288,6 +291,8 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
                 if (newComment != null && !newComment.isEmpty()) {
                     listener.onAddCommentButtonClicked(achievement, newComment, achievement
                             .getAuthor());
+                    newComment = "";
+                    notifyChange();
                 }
             }
         };
@@ -301,6 +306,14 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
                 listener.onCommentsClicked(achievement);
             }
         };
+    }
+
+    public void setNewComment(String newComment) {
+        this.newComment = newComment;
+    }
+
+    public String getNewComment() {
+        return newComment;
     }
 
 
