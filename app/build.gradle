@@ -46,5 +46,8 @@ dependencies {
     compile 'jp.wasabeef:glide-transformations:2.0.1'
     compile 'com.scopely:fontain:1.0.0'
     compile "com.mikepenz:iconics-core:2.8.2@aar"
+    compile 'com.github.piasy:BigImageViewer:1.2.5'
+    compile 'com.github.piasy:GlideImageLoader:1.2.5'
+    compile 'com.github.piasy:ProgressPieIndicator:1.2.5'
     compile project(':GoodWall')
 }
