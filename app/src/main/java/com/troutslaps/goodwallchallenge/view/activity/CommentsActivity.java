@@ -108,6 +108,11 @@ public class CommentsActivity extends AppCompatActivity implements CommentsFragm
     }
 
     @Override
+    public void onImageTapped(Achievement achievement) {
+        // do nothing
+    }
+
+    @Override
     public void onAuthorClicked(User user) {
         if(bottomSheetDialogFragment == null) {
             bottomSheetDialogFragment = new

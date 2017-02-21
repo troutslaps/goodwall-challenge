@@ -10,9 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.mikepenz.iconics.context.IconicsContextWrapper;
-import com.scopely.fontain.Fontain;
 import com.troutslaps.goodwallchallenge.R;
 import com.troutslaps.goodwallchallenge.app.Constants;
+import com.troutslaps.goodwallchallenge.app.Utils;
 import com.troutslaps.goodwallchallenge.http.client.AchievementRestClient;
 import com.troutslaps.goodwallchallenge.http.client.Result;
 import com.troutslaps.goodwallchallenge.http.response.ApiListWithMetadata;
@@ -151,6 +151,14 @@ public class MainActivity extends AppCompatActivity implements AchievementRestCl
     @Override
     public void onAddCommentButtonClicked(Achievement achievement, String comment, User user) {
         // do nothing
+    }
+
+    @Override
+    public void onImageTapped(Achievement achievement) {
+        Intent i = new Intent(this, ImageActivity.class);
+        i.putStringArrayListExtra(Constants.Fields.ImageUrl, Utils.getRandomPhotoUrls(achievement
+                .getPhotoNames()));
+        startActivity(i);
     }
 
     @Override
