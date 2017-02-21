@@ -3,6 +3,7 @@ package com.troutslaps.goodwallchallenge.model;
 import com.troutslaps.goodwallchallenge.app.Constants;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -234,5 +235,13 @@ public class Achievement extends RealmObject implements Serializable {
     public static RealmResults<Comment> getComments(Realm realm, int id) {
         return realm.where(Comment.class).equalTo(Constants.Fields.AchievementId, id).
                 findAllSortedAsync(Constants.Fields.Created, Sort.DESCENDING);
+    }
+
+    public ArrayList<String> getPhotoNames() {
+        ArrayList<String> photoNames = new ArrayList<>();
+        for(Photo photo : pictures) {
+            photoNames.add(photo.getName());
+        }
+        return photoNames;
     }
 }

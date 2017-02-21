@@ -66,7 +66,13 @@ public class Utils {
 
             };
 
-
+    public static ArrayList<String> getRandomPhotoUrls(ArrayList<String> photoNames) {
+        ArrayList<String> randomPhotos = new ArrayList<>();
+        for(String photoName : photoNames) {
+            randomPhotos.add(getRandomPhoto(photoName));
+        }
+        return randomPhotos;
+    }
 
 
     public static class DateTime {
