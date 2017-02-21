@@ -308,6 +308,15 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
         };
     }
 
+    public View.OnClickListener onImageTapped() {
+        return new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                listener.onImageTapped(achievement);
+            }
+        };
+    }
     public void setNewComment(String newComment) {
         this.newComment = newComment;
     }
@@ -323,6 +332,8 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
         void onCommentsClicked(Achievement achievement);
 
         void onAddCommentButtonClicked(Achievement achievement, String comment, User user);
+
+        void onImageTapped(Achievement achievement);
     }
 
 }
