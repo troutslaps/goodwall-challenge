@@ -33,10 +33,10 @@
         <TextView
             android:id="@+id/iv_author_name"
             style="@style/AppTheme.ClickableText"
-            android:clickable="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/iv_author_photo"
+            android:clickable="true"
             android:paddingTop="16dp"
             android:text="@{achievementViewModel.authorName}"/>
 
@@ -57,6 +57,9 @@
             android:layout_below="@+id/iv_author_photo"
             android:layout_marginBottom="24dp"
             android:adjustViewBounds="true"
+            android:clickable="true"
+            android:foreground="?attr/selectableItemBackground"
+            android:onClick="@{achievementViewModel.onImageTapped()}"
             android:scaleType="fitCenter"
             android:src="@drawable/sparkle_pattern"
             bind:error="@{@drawable/sparkle_pattern}"
@@ -154,11 +157,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_expand_collapse_toggle"
+            android:clickable="true"
             android:onClick="@{achievementViewModel.onCommentsClicked()}"
             android:paddingBottom="4dp"
             android:paddingLeft="16dp"
             android:paddingTop="4dp"
-            android:clickable="true"
             android:text="@{achievementViewModel.commentsDisplay}"
             android:textColor="@drawable/info"
             android:textStyle="bold"/>
@@ -167,10 +170,10 @@
         <TextView
             android:id="@+id/txt_first_comment_author"
             style="@style/AppTheme.ClickableText"
-            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_achievement_comments"
+            android:clickable="true"
             android:onClick="@{achievementViewModel.firstComment != null ? achievementViewModel.firstComment.onAuthorClicked() : null}"
             android:paddingBottom="4dp"
             android:paddingLeft="16dp"
@@ -199,10 +202,10 @@
         <TextView
             android:id="@+id/txt_second_comment_author"
             style="@style/AppTheme.ClickableText"
-            android:clickable="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_first_comment_author"
+            android:clickable="true"
             android:onClick="@{achievementViewModel.secondComment != null ? achievementViewModel.secondComment.onAuthorClicked() : null}"
             android:paddingBottom="4dp"
             android:paddingLeft="16dp"
