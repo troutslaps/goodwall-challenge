@@ -25,6 +25,10 @@
             android:name=".view.activity.CommentsActivity"
             android:label="@string/title_activity_comments"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".view.activity.ImageActivity"
+            android:label="@string/title_activity_comments"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
