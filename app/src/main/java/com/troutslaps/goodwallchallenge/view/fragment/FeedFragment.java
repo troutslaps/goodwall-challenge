@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.scopely.fontain.Fontain;
 import com.scopely.fontain.interfaces.FontFamily;
 import com.troutslaps.goodwallchallenge.R;
+import com.troutslaps.goodwallchallenge.app.Constants;
 import com.troutslaps.goodwallchallenge.databinding.FragmentFeedBinding;
 import com.troutslaps.goodwallchallenge.http.client.AchievementRestClient;
 import com.troutslaps.goodwallchallenge.model.Achievement;
@@ -47,7 +48,8 @@ public class FeedFragment extends Fragment {
 
         FragmentFeedBinding binding = DataBindingUtil.inflate(inflater, R.layout
                 .fragment_feed, container, false);
-        FontFamily family = Fontain.getFontFamily("Karla");
+        FontFamily family = Fontain.getFontFamily(Constants
+                .View.DefaultFont);
         Fontain.applyFontFamilyToViewHierarchy(binding.getRoot(), family);
         binding.setFeedViewModel(feedViewModel);
         return binding.getRoot();

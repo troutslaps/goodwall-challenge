@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.scopely.fontain.Fontain;
 import com.troutslaps.goodwallchallenge.R;
+import com.troutslaps.goodwallchallenge.app.Constants;
 import com.troutslaps.goodwallchallenge.databinding.ItemAchievementBinding;
 import com.troutslaps.goodwallchallenge.model.Achievement;
 import com.troutslaps.goodwallchallenge.viewmodel.AchievementViewModel;
@@ -37,7 +38,8 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementAdapter.
         ItemAchievementBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent
                 .getContext()), R.layout.item_achievement, parent, false);
         binding.setAchievementViewModel(new AchievementViewModel(context, null, listener));
-        Fontain.applyFontFamilyToViewHierarchy(binding.getRoot(), Fontain.getFontFamily("Karla"));
+        Fontain.applyFontFamilyToViewHierarchy(binding.getRoot(), Fontain.getFontFamily(Constants
+                .View.DefaultFont));
         return new BindingHolder(binding);
     }
 

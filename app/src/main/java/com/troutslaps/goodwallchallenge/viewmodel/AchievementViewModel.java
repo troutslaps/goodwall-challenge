@@ -204,12 +204,12 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
             return new IconicsDrawable(context).icon(GoodWall.Icon.gdw_HeartFilled20)
                     .color(ResourcesCompat.getColor(context.getResources(), R.color
                             .colorPrimary, null))
-                    .sizeDp(18);
+                    .sizeDp(Math.round(context.getResources().getDimension(R.dimen.like_icon)));
         }
         return new IconicsDrawable(context).icon(GoodWall.Icon.gdw_HeartOutline20)
                 .color(ResourcesCompat.getColor(context.getResources(), R.color.colorPrimary,
                         null))
-                .sizeDp(18);
+                .sizeDp(Math.round(context.getResources().getDimension(R.dimen.like_icon)));
     }
 
     @Bindable

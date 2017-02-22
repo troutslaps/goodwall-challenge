@@ -16,6 +16,7 @@ public class Constants {
     public static class View {
         public static final String DateFormat = "MMM dd, yyyy";
         public static final String TimeFormat = "hh:mm a";
+        public static final String DefaultFont = "Karla";
     }
 
     public static class Fields {

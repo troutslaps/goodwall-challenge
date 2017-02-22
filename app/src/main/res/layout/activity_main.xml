@@ -36,6 +36,6 @@
         android:scaleType="center"
         app:ico_color="@color/colorTxtTitle"
         app:ico_icon="gdw-Plus-14"
-        app:ico_size="12dp"/>
+        app:ico_size="@dimen/fab_icon_size"/>
 
 </android.support.design.widget.CoordinatorLayout>
