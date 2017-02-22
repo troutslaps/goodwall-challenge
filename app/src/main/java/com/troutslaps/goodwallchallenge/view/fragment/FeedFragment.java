@@ -63,7 +63,7 @@ public class FeedFragment extends Fragment {
         changeListener = new RealmChangeListener<RealmResults<Achievement>>() {
             @Override
             public void onChange(RealmResults<Achievement> element) {
-                feedViewModel.notifyChange();
+                feedViewModel.getAdapter().notifyDataSetChanged();
             }
         };
         achievements = Achievement.getAllAchievements(realm);
