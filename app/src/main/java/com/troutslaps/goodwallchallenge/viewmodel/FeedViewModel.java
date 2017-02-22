@@ -114,8 +114,7 @@ public class FeedViewModel extends BaseObservable implements AchievementRestClie
 
             @Override
             public void onSuccess() {
-                adapter.notifyDataSetChanged();
-                notifyPropertyChanged(BR.isRefreshing);
+                notifyChange();
                 listener.onSuccess();
             }
         }, new Realm.Transaction.OnError() {

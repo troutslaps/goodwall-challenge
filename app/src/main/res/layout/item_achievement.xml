@@ -58,7 +58,7 @@
             android:layout_marginBottom="@dimen/medium"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
-            android:src="@drawable/sparkle_pattern"
+            android:src="@drawable/img_placeholder_neutral"
             bind:error="@{@drawable/sparkle_pattern}"
             bind:imageUrl="@{achievementViewModel.photoUrl}"
             bind:placeholder="@{achievementViewModel.placeholder}"/>
