@@ -1,16 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/black"
-    android:fitsSystemWindows="true"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/apk/res-auto">
 
-    <com.github.piasy.biv.view.BigImageView
-        android:id="@+id/mBigImage"
+    <data>
+
+
+        <variable
+            name="photoViewModel"
+            type="com.troutslaps.goodwallchallenge.viewmodel.PhotoViewModel"/>
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        />
+        android:background="@android:color/black"
+        android:fitsSystemWindows="true"
+        >
 
-</FrameLayout>
+        <com.github.piasy.biv.view.BigImageView
+            android:id="@+id/mBigImage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            bind:achievementPhoto="@{photoViewModel.photoUrl}"
+            />
+
+    </FrameLayout>
+</layout>
