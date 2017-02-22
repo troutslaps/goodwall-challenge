@@ -20,4 +20,7 @@
     <string name="lbl_comments_toolbar">Comments (%d)</string>
     <string name="lbl_toggle_close">Close</string>
     <string name="lbl_toggle_expand">See More</string>
+    <string name="lbl_generic_error">No internet connection. Try later.</string>
+    <string name="lbl_retry">Retry</string>
+    <string name="lbl_dismiss">Dismiss</string>
 </resources>
