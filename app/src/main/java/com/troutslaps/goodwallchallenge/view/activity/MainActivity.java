@@ -18,6 +18,7 @@ import com.troutslaps.goodwallchallenge.http.client.Result;
 import com.troutslaps.goodwallchallenge.http.response.ApiListWithMetadata;
 import com.troutslaps.goodwallchallenge.model.Achievement;
 import com.troutslaps.goodwallchallenge.model.Comment;
+import com.troutslaps.goodwallchallenge.model.Photo;
 import com.troutslaps.goodwallchallenge.model.User;
 import com.troutslaps.goodwallchallenge.viewmodel.AchievementViewModel;
 
@@ -154,10 +155,9 @@ public class MainActivity extends AppCompatActivity implements AchievementRestCl
     }
 
     @Override
-    public void onImageTapped(Achievement achievement) {
+    public void onImageTapped(Achievement achievement, Photo photo) {
         Intent i = new Intent(this, ImageActivity.class);
-        i.putStringArrayListExtra(Constants.Fields.ImageUrl, Utils.getRandomPhotoUrls(achievement
-                .getPhotoNames()));
+        i.putExtra(Constants.Fields.PhotoId, photo.getId());
         startActivity(i);
     }
 
