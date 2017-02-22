@@ -67,6 +67,7 @@ public class Achievement extends RealmObject implements Serializable {
         this.comments = comments;
     }
 
+
     public int getId() {
         return id;
     }
@@ -235,4 +236,33 @@ public class Achievement extends RealmObject implements Serializable {
         return realm.where(Comment.class).equalTo(Constants.Fields.AchievementId, id).
                 findAllSortedAsync(Constants.Fields.Created, Sort.DESCENDING);
     }
+
+    public static void saveAchievements(Realm realm, List<Achievement> achievements) {
+        // hack to query all existing comments matching the achievement id
+        // and re-associate them to parent achievement object
+        Comment existingComment;
+        for (Achievement achievement : achievements) {
+            RealmList<Comment> allComments = new RealmList<Comment>();
+            if (achievement.getComments() != null) {
+                for (Comment comment : achievement.getComments()) {
+                    existingComment = realm.where(Comment.class).equalTo(Constants
+                            .Fields.Id, comment.getId()).findFirst();
+                    if (existingComment != null) {
+                        existingComment.deleteFromRealm();
+                    }
+                }
+                allComments.addAll(achievement.getComments());
+            }
+
+            List<Comment> oldComments = realm.where(Comment.class).equalTo
+                    (Constants.Fields.AchievementId, achievement.getId()).findAll();
+
+
+            allComments.addAll(oldComments);
+            achievement.setComments(allComments);
+            achievement.setCommentsCount(allComments.size());
+            realm.copyToRealmOrUpdate(achievement);
+        }
+    }
+
 }
