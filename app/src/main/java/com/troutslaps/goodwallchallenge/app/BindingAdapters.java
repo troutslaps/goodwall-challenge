@@ -24,8 +24,9 @@ public class BindingAdapters {
 
     @BindingAdapter({"bind:imageUrl", "bind:placeholder", "bind:error"})
     public static void loadImage(ImageView view, String url, Drawable placeholder, Drawable error) {
-        if(url != null) {
-            Glide.with(view.getContext()).load(url).placeholder(placeholder).error(error).into(view);
+        if (url != null) {
+            Glide.with(view.getContext()).load(url).placeholder(placeholder).error(error).into
+                    (view);
         } else {
             Glide.with(view.getContext()).load(error).placeholder(placeholder).error(error).into
                     (view);
@@ -49,7 +50,7 @@ public class BindingAdapters {
 
     @BindingAdapter({"bind:isRefreshing"})
     public static void setRefreshing(SwipeRefreshLayout swipeRefreshLayout,
-                                          boolean isRefreshing) {
+                                     boolean isRefreshing) {
         swipeRefreshLayout.setRefreshing(isRefreshing);
     }
 

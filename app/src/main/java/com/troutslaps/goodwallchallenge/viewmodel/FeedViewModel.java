@@ -142,7 +142,6 @@ public class FeedViewModel extends BaseObservable implements AchievementRestClie
 
     public interface Listener {
         void onSuccess();
-
         void onErrorOccured();
     }
 }
