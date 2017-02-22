@@ -313,7 +313,7 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
             @Override
             public void onClick(View v) {
 
-                listener.onImageTapped(achievement);
+                listener.onImageTapped(achievement, achievement.getPictures().get(0));
             }
         };
     }
@@ -333,7 +333,7 @@ public class AchievementViewModel extends BaseObservable implements PostViewMode
 
         void onAddCommentButtonClicked(Achievement achievement, String comment, User user);
 
-        void onImageTapped(Achievement achievement);
+        void onImageTapped(Achievement achievement, Photo photo);
     }
 
 }
