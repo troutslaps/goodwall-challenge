@@ -8,6 +8,8 @@ import android.widget.ImageView;
 
 
 import com.bumptech.glide.Glide;
+import com.github.piasy.biv.indicator.progresspie.ProgressPieIndicator;
+import com.github.piasy.biv.view.BigImageView;
 import com.troutslaps.goodwallchallenge.R;
 
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -30,5 +32,11 @@ public class BindingAdapters {
         Glide.with(view.getContext()).load(url).placeholder(placeholder).error(error)
                 .bitmapTransform(new CropCircleTransformation(view.getContext())).into
                 (view);
+    }
+
+    @BindingAdapter({"bind:achievementPhoto"})
+    public static void loadPhotoUrl(BigImageView bigImageView, String uri) {
+        bigImageView.setProgressIndicator(new ProgressPieIndicator());
+        bigImageView.showImage(Uri.parse(uri));
     }
 }
