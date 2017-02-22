@@ -13,6 +13,7 @@ import com.troutslaps.goodwallchallenge.R;
 import com.troutslaps.goodwallchallenge.app.Constants;
 import com.troutslaps.goodwallchallenge.model.Achievement;
 import com.troutslaps.goodwallchallenge.model.Comment;
+import com.troutslaps.goodwallchallenge.model.Photo;
 import com.troutslaps.goodwallchallenge.model.User;
 import com.troutslaps.goodwallchallenge.view.fragment.CommentsFragment;
 import com.troutslaps.goodwallchallenge.view.fragment.UserBottomSheetDialogFragment;
@@ -108,7 +109,7 @@ public class CommentsActivity extends AppCompatActivity implements CommentsFragm
     }
 
     @Override
-    public void onImageTapped(Achievement achievement) {
+    public void onImageTapped(Achievement achievement, Photo photo) {
         // do nothing
     }
 
