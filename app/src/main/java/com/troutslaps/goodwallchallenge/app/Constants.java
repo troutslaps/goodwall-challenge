@@ -28,7 +28,7 @@ public class Constants {
         public final static String Achievements = "achievements";
         public final static String AchievementId = "achievementId";
         public final static String PendingComment = "pendingComment";
-        public final static String ImageUrl = "imageUrl";
+        public final static String PhotoId = "photoId";
     }
 
 }
