@@ -1,6 +1,7 @@
 package com.troutslaps.goodwallchallenge.view.fragment;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,8 +14,11 @@ import android.view.ViewGroup;
 import com.scopely.fontain.Fontain;
 import com.scopely.fontain.interfaces.FontFamily;
 import com.troutslaps.goodwallchallenge.R;
+import com.troutslaps.goodwallchallenge.databinding.FragmentFeedBinding;
+import com.troutslaps.goodwallchallenge.http.client.AchievementRestClient;
 import com.troutslaps.goodwallchallenge.model.Achievement;
 import com.troutslaps.goodwallchallenge.view.adapter.AchievementAdapter;
+import com.troutslaps.goodwallchallenge.viewmodel.FeedViewModel;
 
 import java.util.List;
 
@@ -28,11 +32,10 @@ import io.realm.RealmResults;
 public class FeedFragment extends Fragment {
 
     private static final String TAG = FeedFragment.class.getSimpleName();
-    RealmResults<Achievement> achievements;
     RealmChangeListener changeListener;
     Realm realm;
-    RecyclerView achievementsRv;
-    AchievementAdapter achievementsAdapter;
+    RealmResults<Achievement> achievements;
+    FeedViewModel feedViewModel;
 
     public FeedFragment() {
 
@@ -40,34 +43,32 @@ public class FeedFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_feed, container, false);
-        setupRecyclerView(v);
+                             Bundle savedInstanceState) {
+
+        FragmentFeedBinding binding = DataBindingUtil.inflate(inflater, R.layout
+                .fragment_feed, container, false);
         FontFamily family = Fontain.getFontFamily("Karla");
-        Fontain.applyFontFamilyToViewHierarchy(v, family);
-        return v;
-    }
-
-    private void setupRecyclerView(View v) {
-        achievementsRv = (RecyclerView) v.findViewById(R.id.list);
-        achievementsRv.setLayoutManager(new LinearLayoutManager(getActivity()));
-        achievementsAdapter = new AchievementAdapter(getActivity(), achievements);
-        achievementsRv.setAdapter(achievementsAdapter);
-
+        Fontain.applyFontFamilyToViewHierarchy(binding.getRoot(), family);
+        binding.setFeedViewModel(feedViewModel);
+        return binding.getRoot();
     }
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         realm = Realm.getDefaultInstance();
+        // leave the change listener here, since it has to be removed at hte end of the lifecycle
         changeListener = new RealmChangeListener<RealmResults<Achievement>>() {
             @Override
             public void onChange(RealmResults<Achievement> element) {
-                achievementsAdapter.notifyDataSetChanged();
+                feedViewModel.notifyChange();
             }
         };
         achievements = Achievement.getAllAchievements(realm);
         achievements.addChangeListener(changeListener);
+        feedViewModel = new FeedViewModel(achievements, getContext(), (FeedViewModel.Listener)
+                getActivity(), realm);
+        AchievementRestClient.getInstance(feedViewModel).getAchievements();
     }
 
     @Override

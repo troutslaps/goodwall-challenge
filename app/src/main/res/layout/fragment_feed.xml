@@ -1,21 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/content_achievement"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:showIn="@layout/activity_main"
-    tools:context="com.troutslaps.goodwallchallenge.view.fragment.FeedFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:bind="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/list"
+    <data>
+
+        <variable
+            name="feedViewModel"
+            type="com.troutslaps.goodwallchallenge.viewmodel.FeedViewModel"/>
+    </data>
+
+    <RelativeLayout
+
+        android:id="@+id/content_achievement"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="0dp"
-        android:padding="0dp"
-        android:background="@color/colorBackground"
-        android:clipToPadding="false"/>
+        tools:context="com.troutslaps.goodwallchallenge.view.fragment.FeedFragment"
+        tools:showIn="@layout/activity_main">
 
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            bind:isRefreshing="@{feedViewModel.isRefreshing}"
+            bind:onRefreshListener="@{feedViewModel.onFeedRefresh}">
 
-</RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="0dp"
+                android:background="@color/colorBackground"
+                android:clipToPadding="false"
+                android:padding="0dp"
+                bind:layoutManager="@{feedViewModel.layoutManager}"
+                bind:adapter="@{feedViewModel.adapter}"/>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+        <!--<include-->
+            <!--android:visibility="@{feedViewModel.emptyLoading}"-->
+            <!--android:id="@+id/empty_loading"-->
+            <!--layout="@layout/item_loading"-->
+            <!--/>-->
+    </RelativeLayout>
+</layout>

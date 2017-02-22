@@ -4,13 +4,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.mikepenz.iconics.context.IconicsContextWrapper;
-import com.scopely.fontain.Fontain;
 import com.troutslaps.goodwallchallenge.R;
 import com.troutslaps.goodwallchallenge.app.Constants;
 import com.troutslaps.goodwallchallenge.http.client.AchievementRestClient;
@@ -20,17 +22,15 @@ import com.troutslaps.goodwallchallenge.model.Achievement;
 import com.troutslaps.goodwallchallenge.model.Comment;
 import com.troutslaps.goodwallchallenge.model.User;
 import com.troutslaps.goodwallchallenge.viewmodel.AchievementViewModel;
+import com.troutslaps.goodwallchallenge.viewmodel.FeedViewModel;
 
 import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmList;
 
-public class MainActivity extends AppCompatActivity implements AchievementRestClient
-        .GetAchievementsCallback, AchievementViewModel.Listener {
-
-    private static final String TAG = MainActivity.class.getSimpleName();
-    private FloatingActionButton fab;
+public class MainActivity extends AppCompatActivity implements AchievementViewModel.Listener,
+        FeedViewModel.Listener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity implements AchievementRestCl
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        AchievementRestClient.getInstance(this).getAchievements();
     }
 
     @Override
@@ -74,69 +73,7 @@ public class MainActivity extends AppCompatActivity implements AchievementRestCl
         super.attachBaseContext(IconicsContextWrapper.wrap(newBase));
     }
 
-    @Override
-    public void onProgressStarted(Result result) {
-        // TODO tell fragment to circular progress
-    }
 
-    @Override
-    public void onSuccess(final Result result) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Bundle extras = result.getExtras();
-                ApiListWithMetadata<Achievement> apiResult = (ApiListWithMetadata<Achievement>)
-                        extras
-                                .getSerializable(Constants.Fields
-                                        .Achievements);
-                final List<Achievement> achievements = apiResult.getData();
-                Realm realm = Realm.getDefaultInstance();
-                realm.executeTransactionAsync(new Realm.Transaction() {
-                    @Override
-                    public void execute(Realm realm) {
-                        // hack to query all existing comments matching the achievement id
-                        // and re-associate them to parent achievement object
-                        Comment existingComment;
-
-                        for (Achievement achievement : achievements) {
-                            RealmList<Comment> allComments = new RealmList<Comment>();
-                            if (achievement.getComments() != null) {
-                                for (Comment comment : achievement.getComments()) {
-                                    existingComment = realm.where(Comment.class).equalTo(Constants
-                                                    .Fields.Id, comment.getId()).findFirst();
-                                    if(existingComment != null) {
-                                        existingComment.deleteFromRealm();
-                                    }
-                                }
-                                allComments.addAll(achievement.getComments());
-                            }
-
-                            List<Comment> oldComments = realm.where(Comment.class).equalTo
-                                    (Constants.Fields.AchievementId, achievement.getId()).findAll();
-
-
-                            allComments.addAll(oldComments);
-                            achievement.setComments(allComments);
-                            achievement.setCommentsCount(allComments.size());
-                            realm.copyToRealmOrUpdate(achievement);
-                        }
-
-                    }
-                });
-
-            }
-        });
-    }
-
-    @Override
-    public void onFailure(Result result) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-
-            }
-        });
-    }
 
     @Override
     public void onCongratsClicked(Achievement achievement) {
@@ -164,5 +101,15 @@ public class MainActivity extends AppCompatActivity implements AchievementRestCl
         startActivity(i);
         overridePendingTransition(R.anim.animation_enter,
                 R.anim.animation_leave);
+    }
+
+    @Override
+    public void onSuccess() {
+       // do nothing
+    }
+
+    @Override
+    public void onErrorOccured() {
+        Toast.makeText(this, R.string.lbl_generic_error, Toast.LENGTH_SHORT).show();
     }
 }
