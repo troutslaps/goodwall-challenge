@@ -14,6 +14,6 @@ public class Application extends android.app.Application {
     public void onCreate() {
         super.onCreate();
         Realm.init(getApplicationContext());
-        Fontain.init(this, "Karla");
+        Fontain.init(this, Constants.View.DefaultFont);
     }
 }

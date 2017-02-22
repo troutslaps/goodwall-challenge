@@ -16,16 +16,16 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/smaller"
         android:background="@color/colorTxtTitle"
         android:orientation="vertical">
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/iv_author_photo"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/larger"
+            android:layout_height="@dimen/larger"
             android:layout_alignParentLeft="true"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/smaller"
             bind:error="@{achievementViewModel.profilePlaceholder}"
             bind:placeholder="@{achievementViewModel.profilePlaceholder}"
             bind:profilePhotoUrl="@{achievementViewModel.authorProfilePhoto}"/>
@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/iv_author_photo"
-            android:paddingTop="16dp"
+            android:paddingTop="@dimen/small"
             android:text="@{achievementViewModel.authorName}"/>
 
         <TextView
@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/iv_author_photo"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="@dimen/medium"
             android:adjustViewBounds="true"
             android:scaleType="fitCenter"
             android:src="@drawable/sparkle_pattern"
@@ -69,8 +69,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/txt_achievement_title"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="@dimen/smaller"
+            android:layout_marginLeft="@dimen/small"
             android:text="@{achievementViewModel.achievementDate}"
             android:textStyle="bold"/>
 
@@ -80,8 +80,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/btn_congrats"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="16dp"
+            android:layout_marginBottom="@dimen/smaller"
+            android:layout_marginLeft="@dimen/small"
             android:text="@{achievementViewModel.achievementTitle}"
             android:textStyle="bold"/>
 
@@ -91,31 +91,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/txt_achievement_body"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="@dimen/small"
             android:background="@drawable/congrats_button_background"
             android:clickable="true"
-            android:drawablePadding="16dp"
+            android:drawablePadding="@dimen/small"
             android:drawableRight="@{achievementViewModel.congratsDrawable}"
             android:foreground="?attr/selectableItemBackground"
             android:onClick="@{achievementViewModel.onCongratsClicked()}"
-            android:paddingLeft="32dp"
-            android:paddingRight="32dp"
+            android:paddingLeft="@dimen/large"
+            android:paddingRight="@dimen/large"
             android:text="@string/txt_congrats"/>
 
         <Button
             android:id="@+id/btn_like"
             style="@style/AppTheme.LikeButton"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="@dimen/largest"
+            android:layout_height="@dimen/largest"
             android:layout_alignBottom="@+id/btn_congrats"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
-            android:drawablePadding="0dp"
+            android:layout_marginRight="@dimen/small"
+            android:drawablePadding="@dimen/none"
             android:drawableTop="@{achievementViewModel.likeDrawable}"
-            android:elevation="3dp"
-            android:paddingBottom="8dp"
-            android:paddingTop="16dp"
+            android:elevation="@dimen/elevation"
+            android:paddingBottom="@dimen/smaller"
+            android:paddingTop="@dimen/small"
             android:text="@{achievementViewModel.likeCount}"
             />
 
@@ -127,10 +127,10 @@
             android:layout_below="@+id/iv_achievement_photo"
             android:ellipsize="end"
             android:maxLines="@{achievementViewModel.maxLines}"
-            android:paddingBottom="2dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="16dp"
+            android:paddingBottom="@dimen/tiny"
+            android:paddingLeft="@dimen/small"
+            android:paddingRight="@dimen/small"
+            android:paddingTop="@dimen/small"
             android:text="@{achievementViewModel.achievementBody}"/>
 
         <TextView
@@ -141,10 +141,10 @@
             android:layout_below="@+id/txt_achievement_body"
             android:clickable="true"
             android:onClick="@{achievementViewModel.toggleAchievementBody()}"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="0dp"
+            android:paddingBottom="@dimen/smaller"
+            android:paddingLeft="@dimen/small"
+            android:paddingRight="@dimen/small"
+            android:paddingTop="@dimen/none"
             android:text="@{achievementViewModel.toggleControlText}"
             android:visibility="@{achievementViewModel.toggleControlVisibility}"/>
 
@@ -155,9 +155,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_expand_collapse_toggle"
             android:onClick="@{achievementViewModel.onCommentsClicked()}"
-            android:paddingBottom="4dp"
-            android:paddingLeft="16dp"
-            android:paddingTop="4dp"
+            android:paddingBottom="@dimen/smallest"
+            android:paddingLeft="@dimen/small"
+            android:paddingTop="@dimen/smallest"
             android:clickable="true"
             android:text="@{achievementViewModel.commentsDisplay}"
             android:textColor="@drawable/info"
@@ -172,10 +172,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_achievement_comments"
             android:onClick="@{achievementViewModel.firstComment != null ? achievementViewModel.firstComment.onAuthorClicked() : null}"
-            android:paddingBottom="4dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="4dp"
-            android:paddingTop="4dp"
+            android:paddingBottom="@dimen/smallest"
+            android:paddingLeft="@dimen/small"
+            android:paddingRight="@dimen/smallest"
+            android:paddingTop="@dimen/smallest"
             android:text="@{achievementViewModel.firstComment.authorName}"
             android:visibility="@{achievementViewModel.firstComment.visibility}"/>
 
@@ -188,10 +188,10 @@
             android:layout_toRightOf="@+id/txt_first_comment_author"
             android:ellipsize="end"
             android:maxLines="1"
-            android:paddingBottom="4dp"
-            android:paddingLeft="4dp"
-            android:paddingRight="16dp"
-            android:paddingTop="4dp"
+            android:paddingBottom="@dimen/smallest"
+            android:paddingLeft="@dimen/smallest"
+            android:paddingRight="@dimen/smaller"
+            android:paddingTop="@dimen/smallest"
             android:text="@{achievementViewModel.firstComment != null ? achievementViewModel.firstComment.commentBody : null}"
             android:visibility="@{achievementViewModel.firstComment.visibility}"/>
 
@@ -204,10 +204,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_first_comment_author"
             android:onClick="@{achievementViewModel.secondComment != null ? achievementViewModel.secondComment.onAuthorClicked() : null}"
-            android:paddingBottom="4dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="4dp"
-            android:paddingTop="4dp"
+            android:paddingBottom="@dimen/smallest"
+            android:paddingLeft="@dimen/small"
+            android:paddingRight="@dimen/smallest"
+            android:paddingTop="@dimen/smallest"
             android:text="@{achievementViewModel.secondComment != null ? achievementViewModel.secondComment.authorName : null}"
             android:visibility="@{achievementViewModel.secondComment.visibility}"/>
 
@@ -220,10 +220,10 @@
             android:layout_toRightOf="@+id/txt_second_comment_author"
             android:ellipsize="end"
             android:maxLines="1"
-            android:paddingBottom="4dp"
-            android:paddingLeft="4dp"
-            android:paddingRight="16dp"
-            android:paddingTop="4dp"
+            android:paddingBottom="@dimen/smallest"
+            android:paddingLeft="@dimen/smallest"
+            android:paddingRight="@dimen/small"
+            android:paddingTop="@dimen/smallest"
             android:text="@{achievementViewModel.secondComment != null ? achievementViewModel.secondComment.commentBody : null }"
             android:visibility="@{achievementViewModel.secondComment.visibility}"/>
 
@@ -233,9 +233,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_second_comment_author"
-            android:paddingBottom="8dp"
-            android:paddingLeft="16dp"
-            android:paddingTop="8dp"
+            android:paddingBottom="@dimen/smaller"
+            android:paddingLeft="@dimen/small"
+            android:paddingTop="@dimen/smaller"
             android:text="@{achievementViewModel.postTimeAgo}"/>
 
 

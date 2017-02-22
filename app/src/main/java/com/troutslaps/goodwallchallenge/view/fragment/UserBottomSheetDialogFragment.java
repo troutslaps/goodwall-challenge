@@ -13,6 +13,7 @@ import android.view.View;
 import com.scopely.fontain.Fontain;
 import com.scopely.fontain.interfaces.FontFamily;
 import com.troutslaps.goodwallchallenge.R;
+import com.troutslaps.goodwallchallenge.app.Constants;
 import com.troutslaps.goodwallchallenge.databinding.FragmentContactActionsBinding;
 import com.troutslaps.goodwallchallenge.viewmodel.UserViewModel;
 
@@ -33,7 +34,6 @@ public class UserBottomSheetDialogFragment extends BottomSheetDialogFragment {
                     if (newState == BottomSheetBehavior.STATE_HIDDEN) {
                         dismiss();
                     }
-
                 }
 
                 @Override
@@ -48,7 +48,8 @@ public class UserBottomSheetDialogFragment extends BottomSheetDialogFragment {
         binding = DataBindingUtil.inflate(LayoutInflater.from(getContext()), R.layout
                 .fragment_contact_actions, null, false);
         binding.setUserViewModel(userViewModel);
-        FontFamily family = Fontain.getFontFamily("Karla");
+        FontFamily family = Fontain.getFontFamily(Constants
+                .View.DefaultFont);
         Fontain.applyFontFamilyToViewHierarchy(binding.getRoot(), family);
         dialog.setContentView(binding.getRoot());
 

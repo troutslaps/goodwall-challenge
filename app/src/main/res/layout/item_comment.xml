@@ -17,9 +17,9 @@
         android:foreground="?attr/selectableItemBackground"
         android:onClick="@{commentViewModel.onAuthorClicked()}"
         android:orientation="vertical"
-        android:paddingBottom="8dp"
-        android:paddingRight="8dp"
-        android:paddingTop="8dp">
+        android:paddingBottom="@dimen/smaller"
+        android:paddingRight="@dimen/smaller"
+        android:paddingTop="@dimen/smaller">
 
         <android.support.v7.widget.AppCompatImageView
             android:id="@+id/iv_profile_photo"
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@+id/iv_profile_photo"
-            android:padding="4dp"
+            android:padding="@dimen/smallest"
             android:text="@{commentViewModel.getAuthorName()}"/>
 
         <TextView
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBottom="@+id/txt_comment_author"
             android:layout_toRightOf="@+id/txt_comment_author"
-            android:padding="4dp"
+            android:padding="@dimen/smallest"
             android:text="@{commentViewModel.getCommentTime()}"/>
 
         <TextView
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/txt_comment_author"
             android:layout_toRightOf="@+id/iv_profile_photo"
-            android:padding="4dp"
+            android:padding="@dimen/smallest"
             android:text="@{commentViewModel.getCommentBody()}"/>
 
     </RelativeLayout>

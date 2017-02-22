@@ -32,7 +32,7 @@ public class UserViewModel extends BaseObservable {
         return new IconicsDrawable(context).icon(GoodWall.Icon.gdw_Profile18)
                 .color(ResourcesCompat.getColor(context.getResources(), R.color.colorTxtInfo,
                         null))
-                .sizeDp(18);
+                .sizeDp(Math.round(context.getResources().getDimension(R.dimen.like_icon)));
     }
 
     @Bindable
@@ -40,7 +40,7 @@ public class UserViewModel extends BaseObservable {
         return new IconicsDrawable(context).icon(GoodWall.Icon.gdw_Message20)
                 .color(ResourcesCompat.getColor(context.getResources(), R.color.colorTxtInfo,
                         null))
-                .sizeDp(18);
+                .sizeDp(Math.round(context.getResources().getDimension(R.dimen.like_icon)));
     }
 
     @Bindable
@@ -48,7 +48,7 @@ public class UserViewModel extends BaseObservable {
         return new IconicsDrawable(context).icon(GoodWall.Icon.gdw_Report18)
                 .color(ResourcesCompat.getColor(context.getResources(), R.color.colorTxtInfo,
                         null))
-                .sizeDp(18);
+                .sizeDp(Math.round(context.getResources().getDimension(R.dimen.like_icon)));
     }
 
 

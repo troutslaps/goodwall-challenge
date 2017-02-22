@@ -20,13 +20,13 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
     <style name="AppTheme.TextAppearanceSmall" parent="@android:style/TextAppearance.Small">
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/font_small</item>
     </style>
     <style name="AppTheme.TextAppearanceMedium" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/font_medium</item>
     </style>
     <style name="AppTheme.TextAppearanceLarge" parent="@android:style/TextAppearance.Large">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">@dimen/font_large</item>
     </style>
     <style name="AppTheme.PostBodyText" parent="AppTheme.TextAppearanceMedium">
         <item name="android:maxLines">3</item>
@@ -80,10 +80,10 @@
     </style>
 
     <style name="AppTheme.CommentEditText" parent="Widget.AppCompat.EditText">
-        <item name="android:paddingTop">16dp</item>
-        <item name="android:paddingBottom">16dp</item>
-        <item name="android:paddingLeft">48dp</item>
-        <item name="android:paddingRight">48dp</item>
+        <item name="android:paddingTop">@dimen/small</item>
+        <item name="android:paddingBottom">@dimen/small</item>
+        <item name="android:paddingLeft">@dimen/larger</item>
+        <item name="android:paddingRight">@dimen/larger</item>
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>
         <item name="android:background">@color/colorTxtTitle</item>
         <item name="android:textColor">@color/colorTxtBody</item>
@@ -93,10 +93,10 @@
     </style>
 
     <style name="AppTheme.ContactActionButton">
-        <item name="elevation">0dp</item>
+        <item name="elevation">@dimen/none</item>
         <item name="android:gravity">left</item>
-        <item name="android:padding">16dp</item>
-        <item name="android:drawablePadding">16dp</item>
+        <item name="android:padding">@dimen/small</item>
+        <item name="android:drawablePadding">@dimen/small</item>
         <item name="android:background">@drawable/bg_white</item>
         <item name="android:foreground">?attr/selectableItemBackground</item>
         <item name="android:textAppearance">?android:attr/textAppearanceMedium</item>

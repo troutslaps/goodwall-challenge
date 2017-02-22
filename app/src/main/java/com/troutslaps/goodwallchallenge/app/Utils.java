@@ -162,7 +162,7 @@ public class Utils {
         return new IconicsDrawable(context)
                 .icon(GoodWall.Icon.gdw_Congrats_08_18)
                 .color(ResourcesCompat.getColor(context.getResources(), R.color.colorPrimary, null))
-                .sizeDp(16);
+                .sizeDp(Math.round(context.getResources().getDimension(R.dimen.congrats_icon)));
     }
 
     public static Drawable getRandomPlaceholder(Context context) {

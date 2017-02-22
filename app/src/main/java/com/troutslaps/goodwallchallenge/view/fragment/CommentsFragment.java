@@ -53,7 +53,8 @@ public class CommentsFragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_comments, container, false);
         setupRecyclerView(binding.getRoot());
-        FontFamily family = Fontain.getFontFamily("Karla");
+        FontFamily family = Fontain.getFontFamily(Constants
+                .View.DefaultFont);
         Fontain.applyFontFamilyToViewHierarchy(binding.getRoot(), family);
         return binding.getRoot();
     }
